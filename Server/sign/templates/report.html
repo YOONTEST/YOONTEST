@@ -1,0 +1,220 @@
+<style type="text/css">
+<!--
+.STYLE1 {
+color: #FFFFFF;
+background-color:#4DAEA3;
+font-size:14px;
+text-align:center;
+}
+.caselist{
+font-size:14px;
+font-family:"微软雅黑";
+overflow:hidden;
+table-layout:fixed;}
+
+.caselisttd{
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+font-family:"微软雅黑";
+font-size:12px;
+}
+ #executionLog{
+ line-height:20px;
+ font-size:14px;
+ color:#333333;
+ border: double #999999 ;
+ border-width:2px;;
+ padding:8px;
+ height:400px;
+ width:1200px;
+ }
+
+  #selectPro{
+  display: inline-block;
+  width:auto;
+  height:34px;
+  padding:6px 12px;
+  font-size:14px;
+  color:#555;
+  border: 1px solid #ccc;
+  }
+.table-bordered {
+    border: 1px solid #ddd;
+    border-collapse: separate;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+	margin-bottom:20px;
+	font-size:16px;
+	line-height:40px;
+}
+ #report-td{
+border-bottom:none; border-left:none;
+padding-left:6px;
+}
+ #report-lasttd{
+border-bottom:none; border-left:none;
+padding-left:6px;
+}
+ #report-th{
+border-bottom:none;
+background-color:#FFFFFF;
+padding-left:6px;
+border-left:none;
+border-top:none;
+font-family:"微软雅黑";
+}
+.caselisttd{
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+font-family:"微软雅黑";
+font-size:12px;
+}
+table {
+    display: table;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-color: transparent;
+}
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+	border-color:transparent;
+}
+ #time {
+    height: 30px;
+	font-weight: bold;
+	font-family: "微软雅黑";
+    overflow: hidden;
+	background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+	color:#000;
+}
+.table-striped tbody tr:nth-child(odd) td,
+.table-striped tbody tr:nth-child(odd) th {
+  background-color: #f9f9f9;
+}
+.options {
+background-color:#4DAEA3;
+color:#FFFFFF;
+}
+ul, menu, dir {
+    display: block;
+    list-style-type: disc;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 40px;
+}
+#title li {
+    display: list-item;
+	line-height:20px;
+    text-align: -webkit-match-parent;
+	float:left;
+	list-style-type: none;
+}
+.summary{
+display: table;
+    width: 100%;
+    margin: 0 0 20px 0;
+	min-height: 20px;
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+    -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);}
+
+.summary .count {
+    display: block;
+    font-size: 1.75em;
+    font-weight: bold;
+}
+
+.summary a {
+    display: block;
+    font-size: 1.2em;
+    line-height: 1.4em;
+    text-transform: uppercase;
+    color: #000;
+	text-align:left;
+	text-decoration: none;}
+-->
+</style>
+{% extends "base.html" %}
+{% block content %}
+    <section id="main-content">
+    <section class="wrapper">
+<div style="width:100%;" align="center">
+
+     <div class="nav search-row" id="top_menu">
+      <ul class="nav top-menu">
+     <li style="width:25%; text-align:left">
+        <a style="text-decoration: none;color: #333;text-align: center;" href="/report/api/"><span class="count">{{api_count}}</span><button style="background:transparent;border:none;outline: none;">API</button></a>
+     </li>
+     <li   style="width:25%">
+       <a  style="text-decoration: none;color: #333;text-align: center;" href="/report/web/"> <span class="count">{{web_count}}</span><button style="background:transparent;border:none;outline: none;">WEB</button></a>
+     </li>
+     <li  style="width:25%">
+       <a  style="text-decoration: none;color: #333;text-align: center;" href="/report/app/"> <span class="count">{{app_count}}</span><button style="background:transparent;border:none;outline: none;">APP</button></a>
+     </li>
+     <li  style="width:25%">
+       <a   href="/report/all/" style="text-decoration: none;color: #333;text-align: center;""> <span class="count">{{all_count}}</span><button style="background:transparent;border:none;outline: none;">全部</button></a>
+     </li>
+    </ul>
+         <h2 style="width:1200px" align="left">生成测试报告</h2>
+
+        <!--  search form start -->
+        <ul class="nav top-menu">
+            <li>
+                <div>
+                <div style="float:left">
+                <select class="navbar-form" name="planname"  id = "test_plan">
+                <option value ="no">请选择一个测试计划...</option>
+                {% for report in report_list %}
+                    <option value ="{{report.plan_name}}">{{report.plan_name}}</option>
+                {% endfor %}
+                </select>
+                <a type="button" class="btn btn-success" onclick="select_content('test_plan')" >筛选...</a>
+                </div>
+                </div>
+
+             </li>
+        </ul>
+        <!--  search form end -->
+     </div>
+
+    <table  width="1200px" class="table bootstrap-datatable countries" align="center" style="border: 1px thin #ddd;" id="reportTab">
+        <thead>
+           <tr>
+             <th width="10%">机器名</th>
+             <th width="30%">计划名</th>
+             <th width="10%">状态</th>
+             <th width="20%">创建时间</th>
+             <th width="30%">操作</th>
+           </tr>
+        </thead>
+        <tbody style = "caselist">
+           {% for activity in activities %}
+             <tr>
+               <td title="{{ activity.slave_name }}">{{ activity.slave_name}}</td>
+               <td title="{{ activity.plan_name}}">{{ activity.plan_name}}</td>
+               <td title="{{ activity.status }}">{{ activity.status }}</td>
+               <td title="{{ activity.create_time}}">{{ activity.create_time}}</td>
+               <td><a href="/run_results/{{ activity.id}}/" >查看结果</a></td>
+             </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+    </div>
+              </section>
+      </section>
+{% endblock %}

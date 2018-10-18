@@ -1,0 +1,161 @@
+<style type="text/css">
+<!--
+.STYLE2 {color: #F6F7FB; font-weight: bold; font-family:"微软雅黑"; }
+.STYLE3 {color: #F6F7FB; font-size:-1; font-family:"微软雅黑"; }
+.qrbg { background:url(../static/image/links/links_bg.png) repeat-x}
+#body {
+background-color:#4D76AC;}
+.STYLE4 {color: #828284}
+.appIcon {height:100px; width:100px;  margin:30px;}
+.textIcon {
+height:20px;
+width:75px;
+margin:50px;
+font-family:"微软雅黑";
+font-size:16px;
+color:#4D76AC; font-weight: bold;}
+
+
+-->
+</style>
+
+{% extends "base.html" %}
+{% block content %}
+
+
+	<script type="text/javascript">
+function changeTab(id){
+	var test=document.getElementById("test");
+	var pre=document.getElementById("pre");
+	var pub=document.getElementById("pub");
+	if(id == "test"){
+	test.style.display='block';
+	pre.style.display='none';
+	pub.style.display='none';
+	}
+	if(id == "pre"){
+	test.style.display='none';
+	pre.style.display='block';
+	pub.style.display='none';
+	}
+	if(id == "pub"){
+	test.style.display='none';
+	pre.style.display='none';
+	pub.style.display='block';
+	}
+	}
+</script>
+<table width="100%" height="100%" bgcolor="#F6F7FB" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top" bgcolor="#F6F7FB" >
+	<div style="vertical-align:top">
+	  <div align="center" >
+	 	 <img class="appIcon" src="../static/image/links/testicon.jpg" onclick=changeTab("test") />
+		 <img class="appIcon" src="../static/image/links/preicon.jpg" onclick=changeTab("pre") />
+	  	 <img class="appIcon" src="../static/image/links/pubicon.jpg" onclick=changeTab("pub") />
+		 </div>
+	  <div align="center">
+	  <span class="textIcon">测试环境</span> <span class="textIcon">预发环境</span> <span class="textIcon">生产环境</span>
+	  </div>
+	</div>
+
+<div align="center" style="vertical-align:top">
+<table width="800px" border="0" cellpadding="0" cellspacing="0" id="test" style="display:block">
+  <tr><td width="800px" class="qrbg" height="48" colspan="4"><div align="center"></div></td></tr>
+	<tr height="50" bgcolor="#4D76AC" class="STYLE2">
+	  <td width="100px" align="center">项目</td>
+	  <td width="200px" align="center">URL</td>
+	  <td width="300px" align="center">账号</td>
+	  <td width="150px" align="center">密码</td>
+	</tr>
+	<tr height="50"  bgcolor="#4D76AC" class="STYLE3" align="center">
+		<td>CRM</td>
+		<td><a href="http://crm.qianbaocard.org" target="_blank" style="color:#FFFFFF;">crm.qianbaocard.org</a></td>
+		<td>U4201501011000000001</td>
+		<td>12345678</td>
+	</tr>
+		<tr height="50"  bgcolor="#4D76AC" class="STYLE3" align="center">
+		<td>BOS</td>
+		<td><a href="http://bos-new-test.qianbaocard.org" target="_blank" style="color:#FFFFFF;">bos-new-test.qianbaocard.org</a></td>
+		<td>ʕ•ᴥ•ʔ</td>
+		<td>ʕ•ᴥ•ʔ</td>
+	</tr>
+	<tr height="50"  bgcolor="#4D76AC" class="STYLE3" align="center">
+		<td>钱包商家</td>
+		<td><a href="http://test.qianbaocard.org/merchant/" target="_blank" style="color:#FFFFFF;">test.qianbaocard.org/merchant</a></td>
+		<td>ʕ•ᴥ•ʔ</td>
+		<td>ʕ•ᴥ•ʔ</td>
+	</tr>
+		<tr height="50"  bgcolor="#4D76AC" class="STYLE3" align="center">
+		<td>权限系统</td>
+		<td><a href="http://permission-test.qianbaocard.org" target="_blank" style="color:#FFFFFF;">permission-test.qianbaocard.org</a></td>
+		<td>ʕ•ᴥ•ʔ</td>
+		<td>ʕ•ᴥ•ʔ</td>
+	</tr>
+	<tr height="50"  bgcolor="#4D76AC" class="STYLE3" align="center">
+		<td>禅道</td>
+		<td><a href="http://chandao.qianbaocard.org/zentao/" target="_blank" style="color:#FFFFFF;">chandao.qianbaocard.org/zentao/</a></td>
+		<td>ʕ•ᴥ•ʔ</td>
+		<td>ʕ•ᴥ•ʔ</td>
+	</tr>
+	</table>
+
+<table width="800px" border="0" cellpadding="0" cellspacing="0" cellspacing="0" id="pre" style="display:none">
+<tr><td width="800px" class="qrbg" height="48" colspan="4"><div align="center"></div></td></tr>
+	<tr height="50" bgcolor="#4D76AC" class="STYLE2">
+	  <td width="100px" align="center">项目</td>
+	  <td width="200px" align="center">URL</td>
+	  <td width="300px" align="center">账号</td>
+	  <td width="100px" align="center">密码</td>
+	</tr>
+	<tr height="50"  bgcolor="#4D76AC" class="STYLE3" align="center">
+		<td>CRM</td>
+		<td><a href="http://crm.qianbaocard.com" target="_blank" style="color:#FFFFFF;">crm.qianbaocard.com(绑host)</a></td>
+		<td>ʕ•ᴥ•ʔ</td>
+		<td>ʕ•ᴥ•ʔ</td>
+	</tr>
+	<tr height="50"  bgcolor="#4D76AC" class="STYLE3" align="center">
+		<td>BOS</td>
+		<td><a href="http://bos-pre.qianbaocard.org" target="_blank" style="color:#FFFFFF;">bos-pre.qianbaocard.org</a></td>
+		<td>ʕ•ᴥ•ʔ</td>
+		<td>ʕ•ᴥ•ʔ</td>
+	</tr>
+	<tr height="50"  bgcolor="#4D76AC" class="STYLE3" align="center">
+		<td>权限系统</td>
+		<td><a href="http://permission-pre.qianbaocard.org" target="_blank" style="color:#FFFFFF;">permission-pre.qianbaocard.org</a></td>
+		<td>ʕ•ᴥ•ʔ</td>
+		<td>ʕ•ᴥ•ʔ</td>
+	</tr>
+	</table>
+
+<table width="800px" border="0" cellpadding="0" cellspacing="0" cellspacing="0" id="pub" style="display:none">
+  <tr><td width="800px" class="qrbg" height="48" colspan="4"><div align="center"></div></td></tr>
+	<tr height="50" bgcolor="#4D76AC" class="STYLE2">
+	  <td width="100px" align="center">项目</td>
+	  <td width="200px" align="center">URL</td>
+	  <td width="300px" align="center">账号</td>
+	  <td width="100px" align="center">密码</td>
+	</tr>
+	<tr height="50"  bgcolor="#4D76AC" class="STYLE3" align="center">
+		<td>CRM</td>
+		<td><a href="http://crm.qianbaocard.com" target="_blank" style="color:#FFFFFF;" style="color:#FFFFFF;">crm.qianbaocard.com</a></td>
+		<td>ʕ•ᴥ•ʔ</td>
+		<td>ʕ•ᴥ•ʔ</td>
+	</tr>
+	<tr height="50"  bgcolor="#4D76AC" class="STYLE3" align="center">
+		<td>BOS</td>
+		<td><a href="http://bos.qianbaocard.org" target="_blank" style="color:#FFFFFF;">bos.qianbaocard.org</a></td>
+		<td>ʕ•ᴥ•ʔ</td>
+		<td>ʕ•ᴥ•ʔ</td>
+	</tr>
+	<tr height="50"  bgcolor="#4D76AC" class="STYLE3" align="center">
+		<td>权限系统</td>
+		<td><a href="http://permission.qianbaocard.org" target="_blank" style="color:#FFFFFF;">permission.qianbaocard.org</a></td>
+		<td>ʕ•ᴥ•ʔ</td>
+		<td>ʕ•ᴥ•ʔ</td>
+	</tr>
+	</table>
+</div>
+</td></tr><tr height="50px" bgcolor="#F6F7FB"><td bgcolor="#F6F7FB">&nbsp;</td></tr></table>
+
+{% endblock %}

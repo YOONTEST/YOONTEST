@@ -1,0 +1,187 @@
+<style type="text/css">
+<!--
+.STYLE1 {
+color: #FFFFFF;
+background-color:#4DAEA3;
+font-size:14px;
+text-align:center;
+}
+.caselist{
+font-size:14px;
+font-family:"微软雅黑";
+overflow:hidden;
+table-layout:fixed;}
+
+.caselisttd{
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+font-family:"微软雅黑";
+font-size:12px;
+}
+ #executionLog{
+ line-height:20px;
+ font-size:14px;
+ color:#333333;
+ border: double #999999 ;
+ border-width:2px;;
+ padding:8px;
+ height:400px;
+ width:1200px;
+ }
+
+  #selectPro{
+  display: inline-block;
+  width:auto;
+  height:34px;
+  padding:6px 12px;
+  font-size:14px;
+  color:#555;
+  border: 1px solid #ccc;
+  }
+
+.summary{
+display: table;
+    width: 100%;
+    margin: 0 0 20px 0;
+	min-height: 20px;
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+    -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);}
+
+.summary .count {
+    display: block;
+    font-size: 1.75em;
+    font-weight: bold;
+}
+.summary a {
+    display: block;
+    font-size: 1.2em;
+    line-height: 1.4em;
+    text-transform: uppercase;
+    color: #000;
+	text-align:left;
+	text-decoration: none;}
+-->
+</style>
+
+{% extends "base.html" %}
+{% block content %}
+        <section id="main-content">
+    <section class="wrapper">
+         <div class="nav search-row" id="top_menu">
+        <!--  search form start -->
+        <ul class="nav top-menu">
+            <li>
+                <div style="float:left">
+                <table>
+                    <tr>
+                    <td><span>TOTAL:</span><span class="count">{{ total_count }}</span></td>
+                    </tr>
+                    <td><span>PASS:</span><span class="count">{{ pass_count }}</span></td>
+                    </tr>
+                    <td><span>FAIL:</span><span class="count">{{ fail_count }}</span></td>
+                    </tr>
+                    <td><span>ERROR:</span><span class="count">{{ error_count }}</span></td>
+                    </tr>
+                    <tr>
+                </table>
+                </div>
+             </li>
+        </ul>
+        <!--  search form end -->
+        <ul class="nav top-menu">
+            <li>
+        <a><button type="button" class="btn btn-success" onclick="javascript:window.history.go(-1);" style="margin-left:20px;">返回</button></a>
+            </li>
+        </ul>
+     </div>
+
+    <div class="row">
+    {% ifequal test_type 'API' %}
+     <div class="">
+     <table class="table bootstrap-datatable countries" style="table-layout:fixed;" >
+         <thead>
+           <tr>
+             <th width="15%">用例名</th>
+             <th width="5%">状态</th>
+             <th width="10%">用时</th>
+             <th width="30%">请求信息</th>
+             <th width="30%">返回信息</th>
+           </tr>
+         </thead>
+         <tbody style = "caselist">
+           {% for execution in executions %}
+             <tr>
+               <td title="{{ execution.casename }}">{{ execution.casename}}</td>
+               <td title="{{ execution.casestatus}}">{{ execution.casestatus}}</td>
+               <td title="{{ execution.caseRunningtime }}">{{ execution.caseRunningtime }}</td>
+               <td title="{{ execution.request_data}}"><textarea cols ="50" rows="10">{{ execution.request_data}}</textarea></td>
+               <td title="{{ execution.response_results}}"><textarea cols ="50" rows="10">{{ execution.response_results}}</textarea></td>
+             </tr>
+          {% endfor %}
+         </tbody>
+       </table>
+     </div>
+     {%else%}
+     <div class="">
+     <table class="table bootstrap-datatable countries" style="table-layout:fixed;" >
+         <thead>
+           <tr>
+             <th>用例集</th>
+             <th>用例名</th>
+             <th>状态</th>
+             <th>用时</th>
+             <th>错误信息</th>
+           </tr>
+         </thead>
+         <tbody style = "caselist">
+           {% for execution in executions %}
+             <tr>
+               <td title="{{ execution.suitename }}">{{ execution.suitename}}</td>
+               <td title="{{ execution.casename }}">{{ execution.casename}}</td>
+               <td title="{{ execution.casestatus}}">{{ execution.casestatus}}</td>
+               <td title="{{ execution.caseRunningtime }}">{{ execution.caseRunningtime }}</td>
+               <td title="{{ execution.errorcontent}}"><textarea cols ="55" rows="2">{{ execution.errorcontent}}</textarea></td>
+             </tr>
+          {% endfor %}
+         </tbody>
+       </table>
+     </div>
+     {%endifequal%}
+
+
+   </div>
+
+   <!-- 列表分页器 -->
+   <div class="pagination">
+     <span class="step-links">
+       共有{{ executions.paginator.num_pages }}页<br>
+       {% if executions.has_previous %}
+         {%ifnotequal executions.previous_page_number 1 %}
+           <a href="?page=1">首页</a>
+         {% endifnotequal %}
+           <a href="?page={{ executions.previous_page_number }}">上一页</a>
+
+       {% endif %}
+         <span class="current">
+            {{ executions.number }} 页
+         </span>
+       {% if executions.has_next %}
+           <a href="?page={{ executions.next_page_number }}">下一页</a>
+           {%ifnotequal executions.next_page_number executions.paginator.num_pages %}
+             <a href="?page={{ executions.paginator.num_pages}}">尾页</a>
+           {% endifnotequal %}
+       {% endif %}
+     </span>
+   </div>
+          </section>
+      </section>
+{% endblock %}

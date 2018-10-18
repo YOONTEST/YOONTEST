@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% extends "base.html" %}
+{% block content %}
+
+      <!--main content start-->
+      <section id="main-content">
+          <section class="wrapper">
+              <!--overview start-->
+			  <div class="row">
+				<div class="col-lg-12">
+					<h3 class="page-header"><i class="fa fa-laptop"></i> Dashboard</h3>
+					<ol class="breadcrumb">
+						<li><i class="fa fa-home"></i><a href="bk2/index.html">Home</a></li>
+						<li><i class="fa fa-laptop"></i>Dashboard</li>
+					</ol>
+				</div>
+			</div>
+
+            <div class="row">
+				<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+					<div class="info-box blue-bg">
+						<i class="fa fa-cloud-download"></i>
+						<div class="count">{{ api_number }}</div>
+						<div class="title">接口用例</div>
+					</div><!--/.info-box-->
+				</div><!--/.col-->
+
+				<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+					<div class="info-box brown-bg">
+						<i class="fa fa-shopping-cart"></i>
+						<div class="count">{{ web_number }}</div>
+						<div class="title">WEB用例</div>
+					</div><!--/.info-box-->
+				</div><!--/.col-->
+
+				<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+					<div class="info-box dark-bg">
+						<i class="fa fa-thumbs-o-up"></i>
+						<div class="count">{{ app_number }}</div>
+						<div class="title">APP用例</div>
+					</div><!--/.info-box-->
+				</div><!--/.col-->
+
+
+			</div><!--/.row-->
+
+           <div class="row">
+
+           </div>
+
+		  <!-- Today status end -->
+
+			<div class="row">
+
+				<div class="col-lg-9 col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h2><i class="fa fa-flag-o red"></i><strong>最近执行的测试计划</strong></h2>
+							<div class="panel-actions">
+								<a href="/home/#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
+								<a href="/home/#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+								<a href="/home/#" class="btn-close"><i class="fa fa-times"></i></a>
+							</div>
+						</div>
+						<div class="panel-body">
+							<table class="table bootstrap-datatable countries">
+								<thead>
+									<tr>
+                                        <th>机器名</th>
+                                        <th>计划名</th>
+                                        <th>状态</th>
+                                        <th>创建时间</th>
+									</tr>
+								</thead>
+								<tbody>
+                                {% for activity in activities %}
+                                <tr>
+                                <td  title="{{ activity.slave_name }}">{{ activity.slave_name}}</td>
+                                <td  title="{{ activity.plan_name}}">{{ activity.plan_name}}</td>
+                                <td  title="{{ activity.status }}">{{ activity.status }}</td>
+                                <td  title="{{ activity.create_time}}">{{ activity.create_time}}</td>
+               <td ><table><tr><td ><a><button onclick="if(confirm('确定要删除吗?')==false)return; javascript:window.location.href='/delete_scripts/{{ activity.id}}/';" >删除</a></td<td><a><button onclick="redirect('/run_results/{{ activity.id}}/')" >查看结果</a></td></tr></table></td>
+                                </tr>
+          {% endfor %}
+									<tr>
+										<td>Germany</td>
+										<td>2563</td>
+										<td>1025</td>
+										<td>
+											<div class="progress thin">
+												<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="73" aria-valuemin="0" aria-valuemax="100" style="width: 73%">
+												</div>
+												<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="27" aria-valuemin="0" aria-valuemax="100" style="width: 27%">
+											  	</div>
+											</div>
+											<span class="sr-only">73%</span>
+										</td>
+									</tr>
+									<tr>
+										<td>India</td>
+										<td>3652</td>
+										<td>2563</td>
+										<td>
+											<div class="progress thin">
+												<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 57%">
+												</div>
+												<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="43" aria-valuemin="0" aria-valuemax="100" style="width: 43%">
+												</div>
+											</div>
+											<span class="sr-only">57%</span>
+										</td>
+									</tr>
+
+
+
+
+
+								</tbody>
+							</table>
+
+						</div>
+
+					</div>
+
+
+                <!-- statics end -->
+
+
+
+          </section>
+      </section>
+      <!--main content end-->
+  <!-- container section start -->
+
+
+{% endblock %}
+</html>

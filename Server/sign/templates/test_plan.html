@@ -1,0 +1,99 @@
+<style type="text/css">
+<!--
+.STYLE1 {
+color: #FFFFFF;
+background-color:#4DAEA3;
+font-size:14px;
+text-align:center;
+}
+.caselist{
+font-size:14px;
+font-family:"微软雅黑";
+overflow:hidden;
+table-layout:fixed;}
+
+.caselisttd{
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+font-family:"微软雅黑";
+font-size:12px;
+}
+-->
+</style>
+{% extends "base.html" %}
+{% block content %}
+    <section id="main-content">
+    <section class="wrapper">
+
+    <div class="nav search-row" id="top_menu">
+        <!--  search form start -->
+        <ul class="nav top-menu">
+            <li>
+                <div>
+                <div style="float:left">
+                    <form class="navbar-form">
+                    <input class='form-control' id='contents' name='contents' type="text" placeholder="计划名">
+                    <a type="button" class="btn btn-success" onclick="search_plan()" >搜索</a>
+                    </form>
+                </div>
+                <div style="float:left">
+                <form class="navbar-form" method="get" action="/add_test_plan/">
+                    <button type="submit" class="btn btn-success">新增测试计划</button>
+                </form>
+                </div>
+                </div>
+             </li>
+        </ul>
+        <!--  search form end -->
+     </div>
+
+
+      <div class="row">
+        <div class="panel-body">
+		<table class="table bootstrap-datatable countries" style="table-layout:fixed;" >
+            <thead>
+              <tr>
+                <th width="60%">测试计划名称</th>
+                <th width="10%">测试类型</th>
+                <th width="30%">操作</th>
+              </tr>
+            </thead>
+            <tbody style = "caselist">
+              {% for plan in test_plan %}
+                <tr>
+                  <td style="height:18px; margin-top:-2px;" ><a href="/view_test_plan/{{ plan.id }}/">{{ plan.plan_name }}</a></td>
+                  <td style="height:18px; margin-top:-2px;" title="{{ plan.test_type}}">{{ plan.test_type}}</td>
+                  <td style="height:18px; margin-top:-2px;"><table><tr><td><a><button onclick="redirect('/edit_test_plan/{{plan.id }}/')">修改</a></td><td><a><button onclick="if(confirm('确定要删除吗?')==false)return; javascript:window.location.href='/delete_test_plan_action/{{ plan.id }}/';">删除</a></td><td><a><button onclick="redirect('/caseplan-detail/{{plan.id }}/')">选择用例</a></td></tr></table></td>
+                </tr>
+             {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    <!-- 列表分页器 -->
+    <div class="pagination">
+      <span class="step-links">
+        共有{{ test_plan.paginator.num_pages }}页<br>
+        {% if test_plan.has_previous %}
+          {%ifnotequal test_plan.previous_page_number 1 %}
+            <a href="?page=1">首页</a>
+          {% endifnotequal %}
+            <a href="?page={{ test_plan.previous_page_number }}">上一页</a>
+
+        {% endif %}
+          <span class="current">
+             {{ test_plan.number }} 页
+          </span>
+        {% if test_plan.has_next %}
+            <a href="?page={{ test_plan.next_page_number }}">下一页</a>
+            {%ifnotequal test_plan.next_page_number test_case.paginator.num_pages %}
+              <a href="?page={{ test_plan.paginator.num_pages}}">尾页</a>
+            {% endifnotequal %}
+        {% endif %}
+      </span>
+    </div>
+          </section>
+      </section>
+{% endblock %}

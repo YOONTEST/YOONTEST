@@ -1,0 +1,85 @@
+<style type="text/css">
+<!--
+.STYLE2 {color: #828284; font-weight: bold; font-family:"微软雅黑"; }
+.qrbg { background:url(../static/image/qr-code/qrcode_bg.png) repeat-x}
+#body {
+background-color:#4D76AC;}
+.STYLE4 {color: #828284}
+.appIcon {height:70px; width:70px;  margin:30px;}
+
+-->
+</style>
+
+{% extends "base.html" %}
+{% block content %}
+
+
+	<script type="text/javascript">
+function changeTab(id){
+	var mer=document.getElementById("qbMer");
+	var life=document.getElementById("qbLife");
+	var ajmd=document.getElementById("qbAjmd");
+	if(id == "qbMer"){
+	mer.style.display='block';
+	life.style.display='none';
+	ajmd.style.display='none';
+	}
+	if(id == "qbLife"){
+	mer.style.display='none';
+	life.style.display='block';
+	ajmd.style.display='none';
+	}
+	if(id == "qbAjmd"){
+	mer.style.display='none';
+	life.style.display='none';
+	ajmd.style.display='block';
+	}
+	}
+</script>
+<table width="100%" height="100%" bgcolor="#4D76AC"><tr><td bgcolor="#4D76AC">
+	<div>
+	  <div align="center"><img src="../static/image/qr-code/crm030601.png" width="375" height="103" /><br />
+	 	 <img class="appIcon" src="../static/image/qr-code/iTunesArtwork.png" onclick=changeTab("qbMer") />
+		 <img class="appIcon" src="../static/image/qr-code/1024.png" onclick=changeTab("qbLife") />
+	  	 <img class="appIcon" src="../static/image/qr-code/icon-1024.png" onclick=changeTab("qbAjmd") />
+      </div>
+	</div>
+<div align="center">
+<table width="800px" border="0" cellpadding="0" cellspacing="0" id="qbMer" style="display:block">
+  <tr><td width="800px" class="qrbg" height="50" colspan="2"><div align="center"></div></td></tr>
+	<tr height="50" bgcolor="#F6F7FB">
+	  <td width="400px" align="center" class="STYLE2">ANDROID商家</td>
+	  <td width="400px" align="center" class="STYLE2">IOS商家</td>
+	</tr>
+	<tr height="300"  bgcolor="#F6F7FB">
+		<td> <div align="center"><img src="../static/image/qr-code/life.png"></div></td>
+		<td> <div align="center"><img src="../static/image/qr-code/business.png"></div></td>
+	</tr>
+	</table>
+
+<table width="800px" border="0" cellpadding="0" cellspacing="0" cellspacing="0" id="qbLife" style="display:none">
+  <tr><td width="800px" class="qrbg" height="50" colspan="2">&nbsp;</td></tr>
+	<tr height="50" bgcolor="#F6F7FB">
+	  <td width="400px" align="center" class="STYLE2">ANDROID生活</td>
+	  <td width="400px" align="center" class="STYLE2">IOS生活</td>
+	</tr>
+	<tr height="300"  bgcolor="#F6F7FB">
+		<td> <div align="center"><img src="../static/image/qr-code/life.png"></div></td>
+		<td> <div align="center"><img src="../static/image/qr-code/business.png"></div></td>
+	</tr>
+	</table>
+
+	<table width="800px" border="0" cellpadding="0" cellspacing="0" cellspacing="0" id="qbAjmd" style="display:none">
+  <tr><td width="800px" class="qrbg" height="50" colspan="2">&nbsp;</td></tr>
+	<tr height="50" bgcolor="#F6F7FB">
+	  <td width="400px" align="center" class="STYLE2">ANDROID阿基米德</td>
+	  <td width="400px" align="center" class="STYLE2">IOS阿基米德</td>
+	</tr>
+	<tr height="300"  bgcolor="#F6F7FB">
+		<td> <div align="center"><img src="../static/image/qr-code/life.png"></div></td>
+		<td> <div align="center"><img src="../static/image/qr-code/business.png"></div></td>
+	</tr>
+	</table>
+</td></tr><tr height="50px" bgcolor="#4D76AC"><td bgcolor="#4D76AC">&nbsp;</td></tr></table>
+</div>
+{% endblock %}

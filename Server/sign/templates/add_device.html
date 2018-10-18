@@ -1,0 +1,93 @@
+<style type="text/css">
+<!--
+ #add-case-label{
+    width: 700px;
+	line-height:30px;
+    padding-top: 5px;
+	text-align:right;
+	display:block;
+	margin-bottom:5px;
+	font-family:"微软雅黑";
+	color:#666666;
+	font-size:16px;
+	margin-bottom:20px;
+	font-weight:normal;
+	padding-right:20%;
+ }
+
+  #add-case-input{
+  margin-left:20px;
+  line-height:25px;
+  width:400px;
+}
+
+-->
+</style>
+{% extends "base.html" %}
+{% block content %}
+
+    <!--发布会表单-->
+	<div align="center" style="width:100%">    <div  style="width:1200px;">
+	<h2 style="width:1200px" align="left">
+      新建/编辑设备</h2>
+    </div>
+
+<!--
+    <script type="text/javascript" >
+      alert("fuck");
+    </script>
+-->
+{%if device%}
+  {% for dev in device%}
+  <div role="main" style="width:1200px; background-color: #f5f5f5; padding-top:10px; padding-bottom:20px;">
+    <div style="margin-top:50px">
+      <div >
+        <form class="bs-example bs-example-form" role="form" action="/edit_device_action/" method="post">
+        <div class="input-group">
+          <label id="add-case-label" style="display:none">ID<input type="text" id="add-case-input" name="device_id" value="{{dev.id }}" readonly></label>
+          <label id="add-case-label">名称<input type="text" id="add-case-input" placeholder="输入名称" name="name" value="{{dev.name }}" ></label>
+          <label id="add-case-label">应用<select id="add-case-input"  name="app_name">
+              <option value ="{{dev.app_name}}" SELECTED>{{dev.app_name}}</option>
+              <option value ="钱包商家" >钱包商家</option>
+              <option value ="钱包生活" >钱包生活</option>
+              <option value ="达芬奇" >达芬奇</option>
+              <option value ="小程序" >小程序</option>
+            </select>
+          </label>
+
+          <label id="add-case-label" >设备信息(json)<textarea type="text" id="add-case-input" placeholder="输入名称" name="device_info" value="{{dev.device_info }}" rows="10">{{dev.device_info }}</textarea></label>
+
+          <button type="submit" class="btn btn-success" style="margin-right:20px;">保存</button><button type="button" class="btn btn-success" onclick="javascript:window.history.go(-1);" style="margin-left:20px;">返回</button><br>
+        </div><!-- /input-group -->
+        </form>
+      </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+  </div>
+  {%endfor%}
+{%else%}
+<div role="main" style="width:1200px; background-color: #f5f5f5; padding-top:10px; padding-bottom:20px;">
+  <div style="margin-top:50px">
+    <div >
+      <form class="bs-example bs-example-form" role="form" action="/add_device_action/" method="post">
+      <div class="input-group">
+      <label id="add-case-label">名称<input type="text" id="add-case-input" placeholder="输入名称" name="name" value="" ></label>
+      <label id="add-case-label">应用<select id="add-case-input"  name="app_name">
+          <option value ="小程序" >小程序</option>
+          <option value ="钱包商家" >钱包商家</option>
+          <option value ="钱包生活" >钱包生活</option>
+          <option value ="达芬奇" >达芬奇</option>
+        </select>
+      </label>
+
+      <label id="add-case-label" >设备信息(json)<textarea type="text" id="add-case-input" placeholder="输入设备信息" name="device_info" value="" rows="10"></textarea></label>
+
+  </div>
+        <button type="submit" class="btn btn-success" style="margin-right:20px;">创建</button><button type="button" class="btn btn-success" onclick="javascript:window.history.go(-1);" style="margin-left:20px;">返回</button><br>
+      </div><!-- /input-group -->
+      </form>
+    </div><!-- /.col-lg-6 -->
+  </div><!-- /.row -->
+</div>
+
+{%endif%}
+{% endblock %}

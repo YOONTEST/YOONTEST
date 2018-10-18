@@ -1,0 +1,61 @@
+<style type="text/css">
+<!--
+ #add-case-label{
+    width: 700px;
+	line-height:30px;
+    padding-top: 5px;
+	text-align:right;
+	display:block;
+	margin-bottom:5px;
+	font-family:"微软雅黑";
+	color:#666666;
+	font-size:16px;
+	margin-bottom:20px;
+	font-weight:normal;
+	padding-right:20%;
+ }
+
+  #add-case-input{
+  margin-left:20px;
+  line-height:25px;
+  width:400px;
+}
+
+-->
+</style>
+{% extends "base.html" %}
+{% block content %}
+            <section id="main-content">
+    <section class="wrapper">
+<!--发布会表单-->
+<div align="center" style="width:100%">    <div  style="width:1200px;">
+<h2 style="width:1200px" align="left">
+  新建/编辑测试计划</h2>
+</div>
+
+  {% for case in test_case%}
+  <div role="main" style="width:1200px; background-color: #f5f5f5; padding-top:10px; padding-bottom:20px;">
+    <div style="margin-top:50px">
+      <div >
+        <form class="bs-example bs-example-form" role="form" action="/edit_test_plan/{{case.plan_id}}/" method="post">
+        <div class="input-group">
+		  <label id="add-case-label" style="display:none">序号<input type="text" id="add-case-input"  name="id" value="{{case.id }}" readonly></label>
+          <label id="add-case-label">测试计划名称<input type="text" id="add-case-input" placeholder="输入测试计划名" name="plan_name" value="{{case.plan_name }}" readonly></label>
+          <label id="add-case-label">测试类型<select id="add-case-input"  name="test_type" readonly>
+              <option value ="{{case.test_type }}" SELECTED>{{case.test_type}}</option>
+              <option value ="WEB" >WEB</option>
+              <option value ="API" >API</option>
+              <option value ="APP" >APP</option>
+            </select>
+          </label>
+    </div>
+          <button type="submit" class="btn btn-success" style="margin-right:20px;">修改</button> <button type="button" class="btn btn-success" onclick="javascript:window.history.go(-1);" style="margin-left:20px;" >返回</button><br>
+	   </div><!-- /input-group -->
+        </form>
+      </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+  </div>
+  {%endfor%}
+              </section>
+      </section>
+{% endblock %}

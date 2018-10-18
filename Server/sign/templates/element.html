@@ -1,0 +1,173 @@
+<style type="text/css">
+<!--
+ #add-case-label{
+    width: 700px;
+	line-height:30px;
+    padding-top: 5px;
+	text-align:right;
+	display:block;
+	margin-bottom:5px;
+	font-family:"微软雅黑";
+	color:#666666;
+	font-size:16px;
+	margin-bottom:20px;
+	font-weight:normal;
+	padding-right:20%;
+ }
+
+  #add-case-input{
+  margin-left:20px;
+  line-height:25px;
+  width:400px;
+}
+
+-->
+</style>
+{% extends "base.html" %}
+{% block content %}
+
+    <!--发布会表单-->
+	<div align="center" style="width:100%">    <div  style="width:1200px;">
+	<h2 style="width:1200px" align="left">
+      新建/编辑测试计划</h2>
+    </div>
+
+<!--
+    <script type="text/javascript" >
+      alert("fuck");
+    </script>
+-->
+{%if element%}
+  {% for ele in element%}
+  <div role="main" style="width:1200px; background-color: #f5f5f5; padding-top:10px; padding-bottom:20px;">
+    <div style="margin-top:50px">
+      <div >
+
+         {%ifequal readonly 'True' %}
+         <form class="bs-example bs-example-form" role="form" action="/element/edit/{{ele.key}}/" method="post">
+         <div class="input-group">
+          <label id="add-case-label" style="display:none">ID<input type="text" id="add-case-input" name="id" value="{{ele.id }}" readonly></label>
+          <label id="add-case-label">关键字<input type="text" id="add-case-input" placeholder="输入测试计划名称" name="key" value="{{ele.key}}" readonly></label>
+
+          <label id="add-case-label">查找对象BY
+            <select id="add-case-input" name="find_by">
+            <option value ="{{ele.find_by }}" SELECTED>{{ele.find_by }}</option>
+            <option value ="xpath" >xpath</option>
+            <option value ="elementid" >elementid</option>
+            <option value ="classname" >classname</option>
+            <option value ="accessibility_id">accessibility_id</option>
+            <option value ="uiautomator">uiautomator</option>
+            <option value ="url" >url</option>
+            <option value ="swipe" >swipe</option>
+			<option value ="tap" >tap</option>
+			<option value ="code" >code</option>
+            </select>
+			<textarea type="text" id="add-case-input" name="find_by_value" value="{{ele.find_by_value }}" rows="10">{{ele.find_by_value }}</textarea>
+          </label>
+
+          <label id="add-case-label">应用<select id="add-case-input"  name="app" readonly>
+            <option value ="{{ele.app }}" SELECTED>{{ele.app }}</option>
+              <option value ="小程序" >小程序</option>
+            </select>
+          </label>
+          <label id="add-case-label">平台<select id="add-case-input"  name="platform" readonly>
+            <option value ="{{ele.platform }}" SELECTED>{{ele.platform }}</option>
+              <option value ="web" >web</option>
+              <option value ="ios" >ios</option>
+              <option value ="android" >android</option>
+            </select>
+          </label>
+          </div>
+          <button type="submit" class="btn btn-success" style="margin-right:20px;">修改</button><button type="button" class="btn btn-success" onclick="javascript:window.history.go(-1);" style="margin-left:20px;">返回</button><br>
+          </div><!-- /input-group -->
+          </form>
+          {%else%}
+          <form class="bs-example bs-example-form" role="form" action="/element/add/{{ele.key }}/" method="post">
+          <div class="input-group">
+          <label id="add-case-label" style="display:none">ID<input type="text" id="add-case-input" name="id" value="{{ele.id }}" readonly></label>
+          <label id="add-case-label">关键字<input type="text" id="add-case-input" placeholder="输入测试计划名称" name="key" value="{{ele.key}}" ></label>
+
+          <label id="add-case-label">查找对象BY
+            <select id="add-case-input" name="find_by">
+            <option value ="{{ele.find_by }}" SELECTED>{{ele.find_by }}</option>
+            <option value ="xpath" >xpath</option>
+            <option value ="elementid" >elementid</option>
+            <option value ="classname" >classname</option>
+            <option value ="accessibility_id">accessibility_id</option>
+            <option value ="uiautomator">uiautomator</option>
+            <option value ="url" >url</option>
+            <option value ="swipe" >swipe</option>
+			<option value ="tap" >tap</option>
+			<option value ="code" >code</option>
+			</select>
+			<textarea type="text" id="add-case-input" name="find_by_value" value="{{ele.find_by_value }}" rows="10">{{ele.find_by_value }}</textarea>
+          </label>
+
+          <label id="add-case-label">应用<select id="add-case-input"  name="app" >
+            <option value ="{{ele.app }}" SELECTED>{{ele.app }}</option>
+            <option value ="小程序" >小程序</option>
+            </select>
+          </label>
+          <label id="add-case-label">平台<select id="add-case-input"  name="platform">
+            <option value ="{{ele.platform }}" SELECTED>{{ele.platform }}</option>
+            <option value ="web" >web</option>
+            <option value ="ios" >ios</option>
+            <option value ="android" >android</option>
+            </select>
+          </label>
+          </div>
+          <button type="submit" class="btn btn-success" style="margin-right:20px;">保存</button><button type="button" class="btn btn-success" onclick="javascript:window.history.go(-1);" style="margin-left:20px;">返回</button><br>
+          </div><!-- /input-group -->
+          </form>
+          {%endifequal%}
+
+      </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+  </div>
+  {%endfor%}
+{%else%}
+<div role="main" style="width:1200px; background-color: #f5f5f5; padding-top:10px; padding-bottom:20px;">
+  <div style="margin-top:50px">
+    <div >
+      <form class="bs-example bs-example-form" role="form" action="/element/add/0/" method="post">
+      <div class="input-group">
+
+      <label id="add-case-label">关键字<input type="text" id="add-case-input" placeholder="输入测试计划名称" name="key" value="" ></label>
+
+      <label id="add-case-label">查找对象BY
+        <select id="add-case-input" name="find_by">
+        <option value ="" >请选择...</option>
+        <option value ="xpath" >xpath</option>
+        <option value ="elementid" >elementid</option>
+        <option value ="classname" >classname</option>
+        <option value ="accessibility_id">accessibility_id</option>
+        <option value ="uiautomator">uiautomator</option>
+        <option value ="url" >url</option>
+        <option value ="coordinate" >coordinate</option>
+		<option value ="code" >code</option>
+        </select>
+		<textarea type="text" id="add-case-input" name="find_by_value" value="" rows="10"></textarea>
+      </label>
+
+      <label id="add-case-label">应用<select id="add-case-input"  name="app">
+        <option value ="NO" >请选择...</option>
+        <option value ="小程序"> 小程序</option>
+        </select>
+      </label>
+      <label id="add-case-label">平台<select id="add-case-input"  name="platform">
+        <option value ="NO" >请选择...</option>
+        <option value ="web" >web</option>
+        <option value ="ios" >ios</option>
+        <option value ="android" >android</option>
+        </select>
+      </label>
+  </div>
+        <button type="submit" class="btn btn-success" style="margin-right:20px;">创建</button><button type="button" class="btn btn-success" onclick="javascript:window.history.go(-1);" style="margin-left:20px;">返回</button><br>
+      </div><!-- /input-group -->
+      </form>
+    </div><!-- /.col-lg-6 -->
+  </div><!-- /.row -->
+</div>
+
+{%endif%}
+{% endblock %}

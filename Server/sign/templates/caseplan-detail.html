@@ -1,0 +1,128 @@
+<style type="text/css">
+<!--
+.STYLE1 {
+color: #FFFFFF;
+background-color:#4DAEA3;
+font-size:14px;
+text-align:center;
+}
+.caselist{
+font-size:14px;
+font-family:"微软雅黑";
+overflow:hidden;
+table-layout:fixed;}
+
+.caselisttd{
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+font-family:"微软雅黑";
+font-size:12px;
+}
+-->
+</style>
+{% extends "base.html" %}
+{% block content %}
+    <section id="main-content">
+    <section class="wrapper">
+
+
+        <div class="nav search-row" id="top_menu">
+        <!--  search form start -->
+        <ul class="nav top-menu">
+            <li>
+                <div>
+                <div style="float:left">
+                    <form class="navbar-form">
+                    <input class='form-control' id='contents' name='contents' type="text" placeholder="用例名">
+                    <a type="button" class="btn btn-success" onclick="search_plan_details('{{plan_id}}')" >搜索</a>
+                    </form>
+                </div>
+                <div style="float:left">
+                <form class="navbar-form" method="get" action="/edit_PlanRelation/{{ plan_id}}/">
+                    <button type="submit" class="btn btn-success">编辑</button>
+                </form>
+                </div>
+                <div style="float:left">
+                        <form class="navbar-form" method="get" action="/delete_CasePlanRelation_action/{{ plan_id}}/">
+                            <button type="submit" class="btn btn-success" onclick="if(confirm('确定删除?')==false)return false;" >清空</button>
+                        </form>
+                </div>
+                <div style="float:left">
+                        <form class="navbar-form" method="get" action="/test-plan/">
+                            <button type="submit" class="btn btn-success">返回计划主页</button>
+                        </form>
+                </div>
+                </div>
+
+             </li>
+        </ul>
+        <!--  search form end -->
+     </div>
+
+
+      <div class="row">
+        <div class="">
+		<table class="table bootstrap-datatable countries"style="table-layout:fixed;" >
+            <thead>
+              <tr>
+                <th width="55px;">用例 id</th>
+                <th width="200px;">&nbsp用例集</th>
+                <th width="200px;">&nbsp用例</th>
+                <th width="200px;">&nbsp操作</th>
+              </tr>
+            </thead>
+            <tbody style = "caselist">
+              {% for plan in test_plan %}
+                <tr>
+                  <td title="{{ plan.case_id }}">{{ plan.case_id }}</td>
+                  <td title="{{ plan.scenario_name }}">{{ plan.scenario_name }}</td>
+                  <td title="{{ plan.testcase_name}}">{{ plan.testcase_name }}</td>
+                  <td ><table><tr>
+                      <td><a><button onclick="if(confirm('确定要删除吗?')==false)return; javascript:window.location.href='/delete_CasePlanRelation_action_s/{{ plan.plan_id }}/{{plan.case_id }}/';" >删除</a></td>
+                      {% ifequal test_type api %}
+                        <td><a><button onclick="redirect('/step_api/view/{{plan.case_id}}/0/')" >查看详情</a></td>
+                      {% endifequal %}
+
+                      {% ifequal test_type web %}
+                        <td><a><button onclick="redirect('/step_web/view/{{plan.case_id}}/0/')" >查看步骤</a></td>
+                      {% endifequal %}
+
+                      {% ifequal test_type app %}
+                        <td><a><button onclick="redirect('/step_app/view/{{plan.case_id}}/0/')" >查看步骤</a></td>
+                      {% endifequal %}
+
+                  </tr></table></td>
+                </tr>
+             {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    <!-- 列表分页器 -->
+    <div class="pagination">
+      <span class="step-links">
+        共有{{ test_plan.paginator.num_pages }}页<br>
+        {% if test_plan.has_previous %}
+          {%ifnotequal test_plan.previous_page_number 1 %}
+            <a href="?page=1">首页</a>
+          {% endifnotequal %}
+            <a href="?page={{ test_plan.previous_page_number }}">上一页</a>
+
+        {% endif %}
+          <span class="current">
+             {{ test_plan.number }} 页
+          </span>
+        {% if test_plan.has_next %}
+            <a href="?page={{ test_plan.next_page_number }}">下一页</a>
+            {%ifnotequal test_plan.next_page_number test_plan.paginator.num_pages %}
+              <a href="?page={{ test_plan.paginator.num_pages}}">尾页</a>
+            {% endifnotequal %}
+        {% endif %}
+      </span>
+    </div>
+          </section>
+      </section>
+{% endblock %}

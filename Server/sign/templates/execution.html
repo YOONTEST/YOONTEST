@@ -1,0 +1,141 @@
+<style type="text/css">
+<!--
+.STYLE1 {
+color: #FFFFFF;
+background-color:#4DAEA3;
+font-size:14px;
+text-align:center;
+}
+.caselist{
+font-size:14px;
+font-family:"微软雅黑";
+overflow:hidden;
+table-layout:fixed;}
+
+.caselisttd{
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+font-family:"微软雅黑";
+font-size:12px;
+}
+ #executionLog{
+ line-height:20px;
+ font-size:14px;
+ color:#333333;
+ border: double #999999 ;
+ border-width:2px;;
+ padding:8px;
+ height:400px;
+ width:1200px;
+ }
+
+  #selectPro{
+  display: inline-block;
+  width:auto;
+  height:34px;
+  padding:6px 12px;
+  font-size:14px;
+  color:#555;
+  border: 1px solid #ccc;
+  }
+-->
+</style>
+
+{% extends "base.html" %}
+{% block content %}
+    <section id="main-content">
+    <section class="wrapper">
+
+
+
+    <div class="nav search-row" id="top_menu">
+        <!--  search form start -->
+        <ul class="nav top-menu">
+            <li>
+                <div>
+                <div style="float:left">
+                <form class="navbar-form" method="get" action="/run_scripts/">
+                 <select class="navbar-form" name="planname"  id = "selectPro">
+                <option value ="no">请选择一个测试计划...</option>
+                {% for plan in plan_list %}
+                    <option value ="{{plan.plan_name}}">{{plan.plan_name}}</option>
+                {% endfor %}
+                </select>
+                <select class="navbar-form" name="slavename"  id = "selectPro">
+                <option value ="{{slave_msg}}">{{slave_msg}}</option>
+                {% for slave in slaves %}
+                    <option value ="{{slave.slave_name}}">{{slave.slave_name}}</option>
+                {% endfor %}
+                </select>
+				<select class="navbar-form" name="devicename"  id = "selectPro">
+                <option value ="{{device_msg}}">{{device_msg}}</option>
+                {% for device in devices %}
+                    <option value ="{{device.name}}">{{device.name}}</option>
+                {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-success" style="padding:6px 12px; height:34px;">添加任务</button>
+                </form>
+                </div>
+                </div>
+
+             </li>
+        </ul>
+
+
+
+   <div class="row">
+     <div class="">
+    <table class="table bootstrap-datatable countries" style="table-layout:fixed;" >
+         <thead>
+           <tr>
+             <th width="10%">机器名</th>
+			 <th width="10%">设备名</th>
+             <th width="20%">计划名</th>
+             <th width="10%">状态</th>
+             <th width="20%">创建时间</th>
+             <th width="30%">操作</th>
+           </tr>
+         </thead>
+         <tbody style = "caselist">
+           {% for activity in activities %}
+             <tr>
+               <td  title="{{ activity.slave_name }}">{{ activity.slave_name}}</td>
+			   <td  title="{{ activity.slave_name }}">{{ activity.device_name}}</td>
+               <td  title="{{ activity.plan_name}}">{{ activity.plan_name}}</td>
+               <td  title="{{ activity.status }}">{{ activity.status }}</td>
+               <td  title="{{ activity.create_time}}">{{ activity.create_time}}</td>
+               <td ><table><tr><td ><a><button onclick="if(confirm('确定要删除吗?')==false)return; javascript:window.location.href='/delete_scripts/{{ activity.id}}/';" >删除</a></td<td><a><button onclick="redirect('/run_results/{{ activity.id}}/')" >查看结果</a></td></tr></table></td>
+             </tr>
+          {% endfor %}
+         </tbody>
+       </table>
+     </div>
+
+   </div>
+
+   <!-- 列表分页器 -->
+   <div class="pagination">
+     <span class="step-links">
+       共有{{ activities.paginator.num_pages }}页<br>
+       {% if activities.has_previous %}
+         {%ifnotequal activities.previous_page_number 1 %}
+           <a href="?page=1">首页</a>
+         {% endifnotequal %}
+           <a href="?page={{ activities.previous_page_number }}">上一页</a>
+
+       {% endif %}
+         <span class="current">
+            {{ activities.number }} 页
+         </span>
+       {% if activities.has_next %}
+           <a href="?page={{ activities.next_page_number }}">下一页</a>
+           {%ifnotequal activities.next_page_number activities.paginator.num_pages %}
+             <a href="?page={{ activities.paginator.num_pages}}">尾页</a>
+           {% endifnotequal %}
+       {% endif %}
+     </span>
+   </div>
+          </section>
+      </section>
+{% endblock %}

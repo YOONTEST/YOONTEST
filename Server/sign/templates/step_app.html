@@ -1,0 +1,223 @@
+<style type="text/css">
+<!--
+ #add-case-label{
+    width: 700px;
+	line-height:30px;
+    padding-top: 5px;
+	text-align:right;
+	display:block;
+	margin-bottom:5px;
+	font-family:"微软雅黑";
+	color:#666666;
+	font-size:16px;
+	margin-bottom:20px;
+	font-weight:normal;
+	padding-right:20%;
+ }
+
+  #add-case-input{
+  margin-left:20px;
+  line-height:25px;
+  width:400px;
+}
+<!--
+.STYLE1 {
+color: #FFFFFF;
+background-color:#4DAEA3;
+font-size:14px;
+text-align:center;
+}
+.caselist{
+font-size:14px;
+font-family:"微软雅黑";
+overflow:hidden;
+table-layout:fixed;}
+
+.caselisttd{
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+font-family:"微软雅黑";
+font-size:12px;
+}
+-->
+</style>
+{% extends "base.html" %}
+{% block content %}
+<section id="main-content">
+    <section class="wrapper">
+    <!--发布会表单-->
+	<div align="center" style="width:100%">    <div  style="width:1200px;">
+	<h2 style="width:1200px" align="left">
+      新建/编辑测试用例</h2>
+    </div>
+
+    {%if one_step %}
+        {% for step in one_step%}
+        <div role="main" style="width:1200px; background-color: #f5f5f5; padding-top:10px; padding-bottom:20px;">
+        <div style="margin-top:50px">
+        <form class="table bootstrap-datatable countries" role="form"  action="/step_app/add/{{case_id}}/{{step.id}}/" method="post">
+        <div class="input-group">
+        <label id="add-case-label">步骤名<select id="add-case-input"  name="step_name">
+          {% for sn in step_name_list %}
+                {%ifequal sn step.step_name%}
+                    <option value ="{{step.step_name}}" SELECTED>{{step.step_name }}</option>
+                {%else%}
+                    <option value ="{{sn}}" >{{sn}}</option>
+                {%endifequal%}
+          {% endfor %}
+        </select>
+        </label>
+        <label id="add-case-label">HOW<select id="add-case-input"  name="how">
+          {% for how in action_list%}
+                {%ifequal step.how how.key_name%}
+                    <option value ="{{step.how}}" SELECTED>{{step.how}}</option>
+                {%else%}
+                    <option value ="{{how.key_name}}" >{{how.key_name}}</option>
+                {%endifequal%}
+          {% endfor %}
+        </select>
+        </label>
+        <label id="add-case-label">WHICH<select id="add-case-input"  name="which">
+          <option value ="" ></option>
+          {% for element in repository%}
+                {%ifequal element.key step.which%}
+                    <option value ="{{step.which}}" SELECTED>{{step.which }}</option>
+                {%else%}
+                    <option value ="{{element.key}}" >{{element.key}}</option>
+                {%endifequal%}
+          {% endfor %}
+        </select>
+        </label>
+        <label id="add-case-label">WHAT<textarea type="text" id="add-case-input" placeholder="" name="what" value="{{step.what}}" rows="10">{{step.what}}</textarea></label>
+        <label id="add-case-label">期望<textarea type="text" id="add-case-input" placeholder="期望" name="expected" value="{{step.expected}}" rows="5">{{step.expected}}</textarea></label>
+        <label id="add-case-label">断言<select id="add-case-input"  name="check_type">
+            <option value ="" ></option>
+          {% for check in assert_list%}
+                {%ifequal check.key_name step.check_type%}
+                    <option value ="{{step.check_type}}" SELECTED>{{step.check_type }}</option>
+                {%else%}
+                    <option value ="{{check.key_name}}" >{{check.key_name}}</option>
+                {%endifequal%}
+
+          {% endfor %}
+
+        </select>
+        </label>
+        </div>
+        <button type="submit" class="btn btn-success" style="margin-right:20px;">保存</button><button type="button" class="btn btn-success" onclick="javascript:window.history.go(-1);" style="margin-left:20px;">返回</button><br>
+        </form>
+        </div>
+        </div>
+
+
+        <div class="row">
+        <div class="">
+        <table class="table bootstrap-datatable countries" style="table-layout:fixed;" >
+           <thead>
+             <tr>
+               <th width="10%">步骤名</th>
+               <th width="10%">HOW</th>
+               <th width="30%">WHICH</th>
+               <th width="10%;">WHAT</th>
+               <th width="10%">期望</th>
+               <th width="10%">断言</th>
+               <th width="30%">操作</th>
+             </tr>
+           </thead>
+           <tbody style = "caselist">
+             {% for step in step_list %}
+               <tr>
+                 <td title="{{ step.step_name }}">{{ step.step_name }}</td>
+                 <td title="{{ step.how }}">{{ step.how }}</td>
+                 <td title="{{ step.which}}">{{ step.which}}</td>
+                 <td title="{{ step.what}}">{{ step.what}}</td>
+                 <td title="{{ step.expected}}">{{ step.expected}}</td>
+                 <td title="{{ step.check_type}}">{{ step.check_type}}</td>
+                 <td><table><tr><td><a><button onclick="redirect('/step_app/view/{{case_id}}/{{ step.id }}/')">修改</a></td><td><a><button onclick="redirect('/step_app/delete/{{case_id}}/{{ step.id }}/')">删除</a></td><td><a><button onclick="redirect('/element/view/{{ step.which }}/')">查看XPATH</a></td></tr></table></td>
+               </tr>
+            {% endfor %}
+           </tbody>
+        </table>
+        </div>
+        </div>
+        </div>
+        </div>
+        {%endfor%}
+{%else%}
+    <div role="main" style="width:1200px; background-color: #f5f5f5; padding-top:10px; padding-bottom:20px;">
+    <div style="margin-top:50px">
+        <form class="table bootstrap-datatable countries" role="form"  action="/step_web/add/{{case_id}}/0/" method="post">
+        <div class="input-group">
+        <label id="add-case-label">步骤名<select id="add-case-input"  name="step_name">
+          {% for sn in step_name_list %}
+          <option value ="{{sn}}" >{{sn}}</option>
+          {% endfor %}
+        </select>
+        </label>
+
+
+        <label id="add-case-label">HOW<select id="add-case-input"  name="how">
+          <option value ="" ></option>
+          {% for how in action_list %}
+          <option value ="{{how.key_name}}" >{{how.key_name}}</option>
+          {% endfor %}
+            </select>
+        </label>
+        <label id="add-case-label">WHICH<select id="add-case-input"  name="which">
+          <option value ="" ></option>
+          {% for element in repository %}
+          <option value ="{{element.key}}" >{{element.key}}</option>
+          {% endfor %}
+        </select>
+        </label>
+        <label id="add-case-label">WHAT<textarea type="text" id="add-case-input" name="what" value="" rows="10"></textarea></label>
+        <label id="add-case-label">期望<textarea type="text" id="add-case-input" name="expected" value="" rows="5"></textarea></label>
+        <label id="add-case-label">断言<select id="add-case-input"  name="check_type">
+          <option value ="" ></option>
+          {% for check in assert_list %}
+          <option value ="{{check.key_name}}" >{{check.key_name}}</option>
+          {% endfor %}
+        </select>
+        </label>
+        </div>
+            <button type="submit" class="btn btn-success" style="margin-right:20px;">添加</button><button type="button" class="btn btn-success" onclick="javascript:window.history.go(-1);" style="margin-left:20px;">返回</button><br>
+         </form>
+        </div>
+     </div>
+
+     <div class="row">
+       <div class="">
+        <table class="table bootstrap-datatable countries" style="table-layout:fixed;" >
+           <thead>
+             <tr>
+               <th width="10%">步骤名</th>
+               <th width="10%">HOW</th>
+               <th width="30%">WHICH</th>
+               <th width="10%;">WHAT</th>
+               <th width="10%">期望</th>
+               <th width="10%">断言</th>
+               <th width="30%">操作</th>
+
+             </tr>
+           </thead>
+           <tbody style = "caselist">
+             {% for step in step_list %}
+               <tr>
+                 <td title="{{ step.step_name }}">{{ step.step_name }}</td>
+                 <td title="{{ step.how }}">{{ step.how }}</td>
+                 <td title="{{ step.which}}">{{ step.which}}</td>
+                 <td title="{{ step.what}}">{{ step.what}}</td>
+                 <td title="{{ step.expected}}">{{ step.expected}}</td>
+                 <td title="{{ step.check_type}}">{{ step.check_type}}</td>
+                 <td ><table><tr><td><a><button onclick="redirect('/step_app/view/{{case_id}}/{{ step.id }}/')">修改</a></td><td><a><button onclick="redirect('/step_app/delete/{{case_id}}/{{ step.id }}/')">删除</a></td><td><a><button onclick="redirect('/element/view/{{ step.which }}/')">查看XPATH</a></td></tr></table></td>
+               </tr>
+            {% endfor %}
+           </tbody>
+         </table>
+       </div>
+     </div>
+{%endif%}
+</section>
+</section>
+{% endblock %}

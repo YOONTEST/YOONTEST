@@ -1,0 +1,108 @@
+<style type="text/css">
+<!--
+.STYLE1 {
+color: #FFFFFF;
+background-color:#4DAEA3;
+font-size:14px;
+text-align:center;
+}
+.caselist{
+font-size:14px;
+font-family:"微软雅黑";
+overflow:hidden;
+table-layout:fixed;}
+
+.caselisttd{
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+font-family:"微软雅黑";
+font-size:12px;
+}
+
+-->
+</style>
+{% extends "base.html" %}
+{% block content %}
+<section id="main-content">
+    <section class="wrapper">
+        <div class="nav search-row" id="top_menu">
+        <!--  search form start -->
+        <ul class="nav top-menu">
+            <li>
+                <div>
+                <div style="float:left">
+                    <form class="navbar-form">
+                    <input id="contents" name="contents" type="text" placeholder="用例名" class="form-control">
+                    <a type="button" class="btn btn-success" onclick="search_plan_relation('{{plan_id}}')">搜索</a>
+                    </form>
+                </div>
+                <div style="float:left">
+                </div>
+                <div style="float:left">
+                    <a type="button" onclick="case_list('{{plan_id}}')"><button class="btn btn-success">关联用例</button></a>
+                </div>
+                <div style="float:left">
+                    <a href="/caseplan-detail/{{ plan_id}}/"><button type="button" class="btn btn-success" style="margin-left:20px;" >返回</button></a>
+                </div>
+                </div>
+
+             </li>
+        </ul>
+        <!--  search form end -->
+     </div>
+
+      <div class="row">
+        <div class="">
+		<table class="table bootstrap-datatable countries" style="table-layout:fixed;" >
+            <thead>
+              <tr>
+                <th>选择</th>
+                <th>编号</th>
+                <th>用例集</th>
+                <th>用例</th>
+                <th>项目</th>
+
+              </tr>
+            </thead>
+            <tbody style = "caselist">
+              {% for case in test_case %}
+                <tr>
+                  <td><input name="caselist" type="checkbox" id="{{ case.id }}" onclick="check_box('{{case.id}}')" value=""></td>
+                  <td><a href="/view_case_api/{{ case.id }}/">{{ case.id }}</a></td>
+                  <td title="{{ case.scenario_name }}">{{ case.scenario_name }}</td>
+                  <td title="{{ case.testcase_name}}">{{ case.testcase_name}}</td>
+                  <td title="{{ case.project_name}}">{{ case.project_name}}</td>
+                </tr>
+             {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    <!-- 列表分页器 -->
+    <div class="pagination">
+      <span class="step-links">
+        共有{{ test_case.paginator.num_pages }}页<br>
+        {% if test_case.has_previous %}
+          {%ifnotequal test_case.previous_page_number 1 %}
+            <a href="?page=1">首页</a>
+          {% endifnotequal %}
+            <a href="?page={{ test_case.previous_page_number }}">上一页</a>
+
+        {% endif %}
+          <span class="current">
+             {{ test_case.number }} 页
+          </span>
+        {% if test_case.has_next %}
+            <a href="?page={{ test_case.next_page_number }}">下一页</a>
+            {%ifnotequal test_case.next_page_number test_case.paginator.num_pages %}
+              <a href="?page={{ test_case.paginator.num_pages}}">尾页</a>
+            {% endifnotequal %}
+        {% endif %}
+      </span>
+    </div>
+          </section>
+      </section>
+{% endblock %}

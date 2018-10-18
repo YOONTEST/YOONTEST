@@ -1,0 +1,106 @@
+<style type="text/css">
+<!--
+.STYLE1 {
+color: #FFFFFF;
+background-color:#4DAEA3;
+font-size:14px;
+text-align:center;
+}
+.caselist{
+font-size:14px;
+font-family:"微软雅黑";
+overflow:hidden;
+table-layout:fixed;}
+
+.caselisttd{
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+font-family:"微软雅黑";
+font-size:12px;
+}
+-->
+</style>
+{% extends "base.html" %}
+{% block content %}
+    <section id="main-content">
+    <section class="wrapper">
+
+     <div class="nav search-row" id="top_menu">
+        <!--  search form start -->
+        <ul class="nav top-menu">
+            <li>
+                <div>
+                <div style="float:left">
+                    <form class="navbar-form">
+                    <input id="contents" name="contents" type="text" placeholder="用例名" class="form-control">
+                    <a type="button" class="btn btn-success" onclick="search_case('{{platform}}')">搜索</a>
+                    </form>
+                </div>
+                <div style="float:left">
+                    <form class="navbar-form" method="get" action="/add_case/{{platform}}/">
+                        <button type="submit" class="btn btn-success">新增测试用例</button>
+                    </form>
+                </div>
+                </div>
+
+             </li>
+        </ul>
+        <!--  search form end -->
+     </div>
+
+      <div class="row">
+        <div class="">
+		<table class="table bootstrap-datatable countries" style="table-layout:fixed;" >
+            <thead>
+              <tr>
+                <th width="20%">用例集</th>
+                <th width="40%">用例</th>
+                <th width="10%">平台</th>
+                <th width="30%">操作</th>
+              </tr>
+            </thead>
+            <tbody style = "caselist">
+              {% for case in test_case %}
+                <tr>
+                  <td title="{{ case.scenario_name }}">{{ case.scenario_name }}</td>
+                  <td><a href="/edit_case/{{ case.id }}/">{{ case.testcase_name}}</a></td>
+                  <td title="{{ case.platform}}">{{ case.platform}}</td>
+				  
+				  {% ifequal platform 'api' %}
+					<td ><table><tr><td ><a><button onclick="redirect('/edit_case/{{ case.id }}/')">修改</a></td><td><a><button onclick="redirect('/run_api_script/{{ case.id }}/')">测试</a></td><td><a><button onclick="redirect('/step_{{platform}}/view/{{ case.id }}/0/')">详情</a></td><td ><a><button onclick="if(confirm('确定要删除吗?')==false)return; javascript:window.location.href='/delete_case_action/{{ case.id }}/';" >删除</a></td></tr></table></td>
+				  {% else %}
+					<td ><table><tr><td ><a><button onclick="redirect('/edit_case/{{ case.id }}/')">修改</a></td><td><a><button onclick="redirect('/step_{{platform}}/view/{{ case.id }}/0/')">步骤详情</a></td><td ><a><button onclick="if(confirm('确定要删除吗?')==false)return; javascript:window.location.href='/delete_case_action/{{ case.id }}/';" >删除</a></td></tr></table></td>
+				  {% endifequal %}
+                </tr>
+             {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    <!-- 列表分页器 -->
+    <div class="pagination">
+      <span class="step-links">
+        共有{{ test_case.paginator.num_pages }}页<br>
+        {% if test_case.has_previous %}
+          {%ifnotequal test_case.previous_page_number 1 %}
+            <a href="?page=1">首页</a>
+          {% endifnotequal %}
+            <a href="?page={{ test_case.previous_page_number }}">上一页</a>
+
+        {% endif %}
+          <span class="current">
+             {{ test_case.number }} 页
+          </span>
+        {% if test_case.has_next %}
+            <a href="?page={{ test_case.next_page_number }}">下一页</a>
+            {%ifnotequal test_case.next_page_number test_case.paginator.num_pages %}
+              <a href="?page={{ test_case.paginator.num_pages}}">尾页</a>
+            {% endifnotequal %}
+        {% endif %}
+      </span>
+    </div>
+          </section>
+      </section>
+{% endblock %}

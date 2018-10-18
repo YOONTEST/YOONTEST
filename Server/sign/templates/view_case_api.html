@@ -1,0 +1,84 @@
+<style type="text/css">
+<!--
+ #add-case-label{
+    width: 700px;
+	line-height:30px;
+    padding-top: 5px;
+	text-align:right;
+	display:block;
+	margin-bottom:5px;
+	font-family:"微软雅黑";
+	color:#666666;
+	font-size:16px;
+	margin-bottom:20px;
+	font-weight:normal;
+	padding-right:20%;
+ }
+
+  #add-case-input{
+  margin-left:20px;
+  line-height:25px;
+  width:400px;
+}
+
+-->
+</style>
+{% extends "base.html" %}
+{% block content %}
+        <section id="main-content">
+    <section class="wrapper">
+    <!--发布会表单-->
+	<div align="center" style="width:100%">    <div  style="width:1200px;">
+	<h2 style="width:1200px" align="left">
+      新建/编辑测试用例</h2>
+    </div>
+
+<!--
+    <script type="text/javascript" >
+      alert("fuck");
+    </script>
+-->
+{%if test_case%}
+  {% for case in test_case%}
+  <div role="main" style="width:1200px; background-color: #f5f5f5; padding-top:10px; padding-bottom:20px;">
+    <div style="margin-top:50px">
+      <div >
+      <form class="bs-example bs-example-form" role="form" action="/run_api_script/" method="post">
+      <div class="input-group">
+          <label id="add-case-label" style="display:none">用例ID<input type="text" id="add-case-input" name="testcase_id" value="{{case.id }}" readonly></label>
+          <label id="add-case-label">用例集<input type="text" id="add-case-input" placeholder="输入用例集名" name="scenario_name" value="{{case.scenario_name }}" readonly></label>
+          <label id="add-case-label">用例<input type="text" id="add-case-input" placeholder="输入用例名" name="testcase_name" value="{{case.testcase_name }}" readonly></label>
+          <label id="add-case-label">方法<input type="text" id="add-case-input" placeholder="输入方法" name="how" value="{{case.how }}"></label>
+          <label id="add-case-label" >URL<textarea type="text" id="add-case-input" placeholder="输入URL" name="which" value="{{case.which}}" rows="3" readonly>{{case.which}}</textarea></label>
+          <label id="add-case-label">Headers<textarea type="text" id="add-case-input" placeholder="输入Header" name="headers" value="{{case.headers }}" rows="5" readonly>{{case.headers }}</textarea></label>
+          <label id="add-case-label">Body<textarea type="text" id="add-case-input" placeholder="输入Body" name="body" value="{{case.body }}" rows="5" readonly>{{case.body }}</textarea></label>
+          <label id="add-case-label">自定义参数<textarea type="text" id="add-case-input" placeholder="输入自定义参数" name="parameters" value="{{case.parameters }}" rows="5" readonly>{{case.parameters }}</textarea></label>
+          <div id="add-case-label">
+            mini_apps_token({'user':'用户名','password':'密码'}) - 获取Token</br>
+            shop_by_name('门店名','分店名') - 获取门店ID</br>
+            place_by_name('桌台名') - 获取桌台ID</br>
+            seller_by_name('商家名') - 获取商家ID</br>
+            qrcode_by_name('商家名') - 获取二维码sn</br>
+            catalog_by_name('商家名','类别名') - 获取类别ID</br>
+            activity_by_nick_name('商家名','微信名') - 获取活动ID</br>
+            item_by_nick_name('商家名','微信名','菜品名') -获取点餐菜品ID</br>
+            wifi_by_ssid('门店名','分店名','wifi ssid') - 获取wifiID</br>
+            printer_by_name('门店名','分店名','打印机名名') - 获取打印机ID</br>
+            content_by_title('商家名','标题') - 获取专题ID 或 横幅ID</br>
+            product_by_name('门店名','分店名','商品名') - 获取商品ID</br>
+          </div>
+          <label id="add-case-label">期望值<textarea type="text" id="add-case-input" placeholder="输入期望值" name="expected" value="{{case.expected }}" rows="3" readonly>{{case.expected }}</textarea></label>
+          <label id="add-case-label">断言类型<input type="text" id="add-case-input" placeholder="输入断言类型" name="check_type" value="{{case.check_type }}" readonly></label>
+          <label id="add-case-label">项目名<input type="text" id="add-case-input" placeholder="输入项目名" name="project_name" value="{{case.project_name}}" readonly></label>
+
+    </div>
+          <a><button type="submit" class="btn btn-success" style="margin-right:20px;">测试</button></a><a href="/edit_case_api/{{ case.id }}/"><button type="button" class="btn btn-success" style="margin-right:20px;">修改</button></a><a><button type="button" class="btn btn-success" onclick="javascript:window.history.go(-1);" style="margin-left:20px;">返回</button></a>
+        </div><!-- /input-group -->
+      </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+  </div>
+  {%endfor%}
+{%endif%}
+              </section>
+      </section>
+{% endblock %}

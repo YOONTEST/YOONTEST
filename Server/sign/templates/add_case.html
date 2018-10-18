@@ -1,0 +1,142 @@
+<style type="text/css">
+<!--
+ #add-case-label{
+    width: 700px;
+	line-height:30px;
+    padding-top: 5px;
+	text-align:right;
+	display:block;
+	margin-bottom:5px;
+	font-family:"微软雅黑";
+	color:#666666;
+	font-size:16px;
+	margin-bottom:20px;
+	font-weight:normal;
+	padding-right:20%;
+ }
+
+  #add-case-input{
+  margin-left:20px;
+  line-height:25px;
+  width:400px;
+}
+<!--
+.STYLE1 {
+color: #FFFFFF;
+background-color:#4DAEA3;
+font-size:14px;
+text-align:center;
+}
+.caselist{
+font-size:14px;
+font-family:"微软雅黑";
+overflow:hidden;
+table-layout:fixed;}
+
+.caselisttd{
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+font-family:"微软雅黑";
+font-size:12px;
+}
+-->
+</style>
+{% extends "base.html" %}
+{% block content %}
+    <section id="main-content">
+    <section class="wrapper">
+    <!--发布会表单-->
+	<div align="center" style="width:100%">    <div  style="width:1200px;">
+	<h2 style="width:1200px" align="left">
+      新建/编辑测试用例</h2>
+    </div>
+{%if test_case%}
+  {% for case in test_case%}
+<div role="main" style="width:1200px; background-color: #f5f5f5; padding-top:10px; padding-bottom:20px;">
+  <div style="margin-top:50px">
+      <form class="bs-example bs-example-form" role="form"  action="/edit_case_action/" method="post">
+      <div class="input-group">
+        <label id="add-case-label" style="display:none">用例ID<input type="text" id="add-case-input" placeholder="用例ID" name="testcase_id" value="{{case.id}}" readonly></label>
+        <label id="add-case-label">用例集<input type="text" id="add-case-input" placeholder="输入用例集名" name="scenario_name" value="{{case.scenario_name}}"></label>
+        <label id="add-case-label">用例<input type="text" id="add-case-input" placeholder="输入用例名" name="testcase_name" value="{{case.testcase_name}}"></label>
+        <label id="add-case-label">项目名<select id="add-case-input"  name="project_name">					
+		 {% for p in project%}
+                {%ifequal p.key_name case.project_name%}
+                    <option value ="{{p.key_name }}" SELECTED>{{p.key_name }}</option>
+                {%else%}
+                    <option value ="{{p.key_name }}">{{p.key_name }}</option>
+                {%endifequal%}
+          {% endfor %}
+		  
+          </select>
+        </label>
+        <label id="add-case-label">平台<select id="add-case-input"  name="platform">
+            <option value ="{{case.platform}}" SELECTED>{{case.platform }}</option>
+			{% if case.platform == 'android'%}
+				<option value ="ios" >ios</option>
+				<option value ="android" >android</option>
+			{% endif%}
+            {% if case.platform == 'ios'%}
+				<option value ="ios" >ios</option>
+				<option value ="android" >android</option>
+			{% endif%}
+          </select>
+        </label>
+        <label id="add-case-label">环境<select id="add-case-input"  name="environment">
+            <option value ="{{case.environment}}" SELECTED>{{case.environment }}</option>
+            <option value ="itg" >itg</option>
+          </select>
+        </label>
+      </div>
+        <button type="submit" class="btn btn-success" style="margin-right:20px;">保存</button><button type="button" class="btn btn-success" onclick="javascript:window.history.go(-1);" style="margin-left:20px;">返回</button><br>
+      </form>
+     </div>
+     </div><!-- /.col-lg-6 -->
+   </div><!-- /.row -->
+
+  {%endfor%}
+{%else%}
+<div role="main" style="width:1200px; background-color: #f5f5f5; padding-top:10px; padding-bottom:20px;">
+  <div style="margin-top:50px">
+      <form class="bs-example bs-example-form" role="form"  action="/add_case_action/" method="post">
+      <div class="input-group">
+        <label id="add-case-label">用例集<input type="text" id="add-case-input" placeholder="输入用例集名" name="scenario_name" value=""></label>
+        <label id="add-case-label">用例<input type="text" id="add-case-input" placeholder="输入用例名" name="testcase_name" value=""></label>
+        <label id="add-case-label">项目名<select id="add-case-input"  name="project_name">
+          {% for p in project%}
+          <option value ="{{p.key_name }}">{{p.key_name}}</option>
+          {% endfor %}
+          </select>
+        </label>
+        <label id="add-case-label">平台<select id="add-case-input"  name="platform">
+			{% if platform == 'api'%} 
+				<option value ="api" >api</option>
+			{% elif platform == 'web'%}
+				<option value ="web" >web</option>
+			{% else %}
+				<option value ="ios" >ios</option>
+				<option value ="android" >android</option>
+			{% endif %}
+            
+            
+          </select>
+        </label>
+        <label id="add-case-label">环境<select id="add-case-input"  name="environment">
+            <option value ="itg" >itg</option>
+          </select>
+        </label>
+      </div>
+        <button type="submit" class="btn btn-success" style="margin-right:20px;">创建</button><button type="button" class="btn btn-success" onclick="javascript:window.history.go(-1);" style="margin-left:20px;">返回</button><br>
+      </form>
+     </div>
+     </div><!-- /.col-lg-6 -->
+   </div><!-- /.row -->
+
+{%endif%}
+
+
+
+          </section>
+      </section>
+{% endblock %}

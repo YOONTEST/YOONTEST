@@ -1,0 +1,143 @@
+<style type="text/css">
+<!--
+ #add-case-label{
+    width: 700px;
+	line-height:30px;
+    padding-top: 5px;
+	text-align:right;
+	display:block;
+	margin-bottom:5px;
+	font-family:"微软雅黑";
+	color:#666666;
+	font-size:16px;
+	margin-bottom:20px;
+	font-weight:normal;
+	padding-right:20%;
+ }
+
+  #add-case-input{
+  margin-left:20px;
+  line-height:25px;
+  width:400px;
+}
+
+-->
+</style>
+{% extends "base.html" %}
+{% block content %}
+    <section id="main-content">
+    <section class="wrapper">
+    <!--发布会表单-->
+	<div align="center" style="width:100%">    <div  style="width:1200px;">
+	<h2 style="width:1200px" align="left">
+      新建/编辑测试用例</h2>
+    </div>
+
+{%if one_step %}
+  {% for step in one_step%}
+  <div role="main" style="width:1200px; background-color: #f5f5f5; padding-top:10px; padding-bottom:20px;">
+    <div style="margin-top:50px">
+      <div >
+        <form class="bs-example bs-example-form" role="form" action="/step_api/add/{{case_id}}/{{step.id}}/" method="post">
+        <div class="input-group">
+          <label id="add-case-label" style="display:none">用例ID<input type="text" id="add-case-input" name="testcase_id" value="{{case.id }}" readonly></label>
+          <label id="add-case-label">方法<select id="add-case-input"  name="how">
+            {% for m in http_method%}
+              {%ifequal step.how m.key_value%}
+                <option value ="{{m.key_value }}" SELECTED>{{m.key_value }}</option>
+              {%else%}
+                <option value ="{{m.key_value }}">{{m.key_value}}</option>s
+              {%endifequal%}
+            {% endfor %}
+            </select>
+          </label>
+          <label id="add-case-label" >URL<textarea type="text" id="add-case-input" placeholder="输入URL" name="which" value="{{step.which}}" rows="3">{{step.which}}</textarea></label>
+          <label id="add-case-label">Headers<textarea type="text" id="add-case-input" placeholder="Headers" name="headers" value="{{step.headers }}" rows="5">{{step.headers }}</textarea></label>
+          <label id="add-case-label">Body<textarea type="text" id="add-case-input" placeholder="Body" name="body" value="{{step.body }}" rows="5">{{step.body }}</textarea></label>
+          <label id="add-case-label">自定义参数<textarea type="text" id="add-case-input" placeholder="Body" name="parameters" value="{{step.parameters }}" rows="5">{{step.parameters }}</textarea></label>
+          <div id="add-case-label">
+            mini_apps_token({'user':'用户名','password':'密码'}) - 获取Token</br>
+            shop_by_name('门店名','分店名') - 获取门店ID</br>
+            place_by_name('桌台名') - 获取桌台ID</br>
+            seller_by_name('商家名') - 获取商家ID</br>
+            qrcode_by_name('商家名') - 获取二维码sn</br>
+            catalog_by_name(''商家名','类别名') - 获取类别ID</br>
+            activity_by_nick_name('商家名','微信名') - 获取活动ID</br>
+            item_by_nick_name('商家名','微信名','菜品名') -获取点餐菜品ID</br>
+            wifi_by_ssid('门店名','分店名','wifi ssid') - 获取wifiID</br>
+            printer_by_name('门店名','分店名','打印机名名') - 获取打印机ID</br>
+            content_by_title('商家名','标题') - 获取专题ID 或 横幅ID</br>
+            product_by_name('门店名','分店名','商品名') - 获取商品ID</br>
+          </div>
+          <label id="add-case-label">期望值<textarea type="text" id="add-case-input" placeholder="输入期望值" name="expected" value="{{step.expected }}" rows="3">{{step.expected }}</textarea></label>
+          <label id="add-case-label">断言类型<select id="add-case-input"  name="check_type">
+            {% for a in assert_list%}
+              {%ifequal step.check_type a.key_value%}
+                <option value ="{{a.key_value }}" SELECTED>{{a.key_value }}</option>
+              {%else%}
+                <option value ="{{a.key_value }}">{{a.key_value}}</option>
+              {%endifequal%}
+            {% endfor %}
+            </select>
+          </label>
+
+    </div>
+          <button type="submit" class="btn btn-success" style="margin-right:20px;">测试</button><button type="submit" class="btn btn-success" style="margin-right:20px;">保存</button><button type="button" class="btn btn-success" onclick="javascript:window.history.go(-1);" style="margin-left:20px;">返回</button><br>
+        </div><!-- /input-group -->
+        </form>
+      </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+  </div>
+  {%endfor%}
+{%else%}
+<div role="main" style="width:1200px; background-color: #f5f5f5; padding-top:10px; padding-bottom:20px;">
+  <div style="margin-top:50px">
+    <div >
+      <form class="bs-example bs-example-form" role="form" action="/step_api/add/{{case_id}}/0/" method="post">
+      <div class="input-group">
+        <label id="add-case-label">方法<select id="add-case-input"  name="how">
+          <option value ="get" >get</option>
+          <option value ="post" >post</option>
+          <option value ="put" >put</option>
+          <option value ="delete" >delete</option>
+          </select>
+        </label>
+        <label id="add-case-label">URL<textarea type="text" id="add-case-input" placeholder="输入URL" name="which" value="" rows="3"></textarea></label>
+        <label id="add-case-label">Headers<textarea type="text" id="add-case-input" placeholder="Headers" name="headers" value="" rows="5"></textarea></label>
+        <label id="add-case-label">Body<textarea type="text" id="add-case-input" placeholder="Body" name="body" value="" rows="5"></textarea></label>
+        <label id="add-case-label">自定义参数<textarea type="text" id="add-case-input" placeholder="Body" name="parameters" value="" rows="5"></textarea></label>
+        <div id="add-case-label" >
+        mini_apps_token({'user':'用户名','password':'密码'}) - 获取Token</br>
+        shop_by_name('门店名','分店名') - 获取门店ID</br>
+        place_by_name('桌台名') - 获取桌台ID</br>
+        seller_by_name('商家名') - 获取商家ID</br>
+        qrcode_by_name('商家名') - 获取二维码sn</br>
+        catalog_by_name('商家名','类别名') - 获取类别ID</br>
+        activity_by_nick_name('商家名','微信名') - 获取活动ID</br>
+        item_by_nick_name('商家名','微信名','菜品名') -获取点餐菜品ID</br>
+        wifi_by_ssid('门店名','分店名','wifi ssid') - 获取wifiID</br>
+        printer_by_name('门店名','分店名','打印机名名') - 获取打印机ID</br>
+        content_by_title('商家名','标题') - 获取专题ID 或 横幅ID</br>
+        product_by_name('门店名','分店名','商品名') - 获取商品ID</br>
+
+        </div>
+        <label id="add-case-label">期望值<textarea type="text" id="add-case-input" placeholder="输入期望值" name="expected" value="" rows="3"></textarea></label>
+        <label id="add-case-label">断言类型<select id="add-case-input"  name="check_type">
+          {% for a in assert_list%}
+          <option value ="{{a.key_value }}">{{a.key_value}}</option>
+          {% endfor %}
+          </select>
+        </label>
+
+  </div>
+        <button type="submit" class="btn btn-success" style="margin-right:20px;">创建</button><button type="button" class="btn btn-success" onclick="redirect('/case/api/')" style="margin-left:20px;">返回</button><br>
+      </div><!-- /input-group -->
+      </form>
+    </div><!-- /.col-lg-6 -->
+  </div><!-- /.row -->
+</div>
+
+{%endif%}
+          </section>
+      </section>
+{% endblock %}
