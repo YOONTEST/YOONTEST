@@ -11,6 +11,7 @@ HOW TO INSTALL?
 
 -------------------------------------------------------------------------
 HOW TO EXECUTION?
+
 SERVER:
 
 1. Move to Server folder and run "python manage.py runserver IP:Port"
