@@ -2,7 +2,7 @@
 
 Kang
 
-#HOW TO INSTALL?
+HOW TO INSTALL?
 
 1. Install Python3.5+
 2. Run "pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r required_package.txt" in command
@@ -11,13 +11,13 @@ Kang
 5. Install APPIUM SERVER
 
 -------------------------------------------------------------------------
-#HOW TO EXECUTION?
+HOW TO EXECUTION?
 
-##SERVER:
+SERVER:
 
 1. Move to Server folder and run "python manage.py runserver IP:Port"
 
 
-##CLIENT:
+CLIENT:
 
 1. Move to Client folder and run "python Slave.py"
