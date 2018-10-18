@@ -3,19 +3,19 @@ Kang
 
 HOW TO INSTALL?
 
-Install Python3.5+
-Run "pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r required_package.txt" in command
-Install JDK
-Install Android SDK
-Install APPIUM SERVER
+1. Install Python3.5+
+2. Run "pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r required_package.txt" in command
+3. Install JDK
+4. Install Android SDK
+5. Install APPIUM SERVER
 
 -------------------------------------------------------------------------
 HOW TO EXECUTION?
 SERVER:
 
-Move to Server folder and run "python manage.py runserver IP:Port"
+1. Move to Server folder and run "python manage.py runserver IP:Port"
 
 
 CLIENT:
 
-Move to Client folder and run "python Slave.py"
+1. Move to Client folder and run "python Slave.py"
