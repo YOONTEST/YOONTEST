@@ -16,7 +16,7 @@ HOW TO EXECUTION?
 
 SERVER:
 
-0.  Build up Mysql database run "python manage.py migrate"
+0.  Build up Mysql database, move to Server folder and run "python manage.py migrate"
 1.  Config database server name and database name in file "Server/Guest/setting.py"
 2.  Move to Server folder and run "python manage.py runserver IP:Port"
 
