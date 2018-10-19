@@ -24,3 +24,5 @@ SERVER:
 CLIENT:
 
 1.  Move to Client folder and run "python Slave.py"
+
+* if you have any questions, please send email to me(jjleekang@outlook.com).
