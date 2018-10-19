@@ -88,11 +88,11 @@ WSGI_APPLICATION = 'guest.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '10.10.11.16',
+        'HOST': '',
         'PORT': '3306',
         'NAME': 'qb',
-        'USER': 'qianbao',
-        'PASSWORD': 'qb123',
+        'USER': '',
+        'PASSWORD': '',
         'OPTIONS': {
             'init_command': "SET sql_mode='NO_ENGINE_SUBSTITUTION,NO_AUTO_CREATE_USER'",
             #'init_command': "SET sql_mode='STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION,NO_AUTO_CREATE_USER'",
