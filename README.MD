@@ -27,4 +27,4 @@ CLIENT:
 
 By Kang
 
-if you have any questions, please send email to me(jjleekang@outlook.com).
+Any questions, please send email to me(jjleekang@outlook.com).
