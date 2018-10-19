@@ -1,7 +1,3 @@
-2018 Oct 18
-
-Kang
-
 HOW TO INSTALL?
 
 1.  Install Python3.5+
@@ -25,4 +21,8 @@ CLIENT:
 
 1.  Move to Client folder and run "python Slave.py"
 
-* if you have any questions, please send email to me(jjleekang@outlook.com).
+
+-----------------------------------------------------------------------------
+2018 Oct 18
+By Kang
+if you have any questions, please send email to me(jjleekang@outlook.com).
