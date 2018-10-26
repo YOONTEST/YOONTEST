@@ -55,6 +55,8 @@ set_activity_calss()
 device_class = load_data.get_device(device_name)
 device = device_class()
 device = device.get("device_info")
+if device:
+    device = ""
 
 scenario_list=[]
 for i in run_list:
@@ -87,7 +89,7 @@ for scenario_name in scenario_list:
     def '''+testcase_name+u'''(self):
         self.testcase_name=sys._getframe().f_code.co_name
         self.test_type = "'''+test_type+u'''"
-        self.device = '''+device+u'''
+        self.device = "'''+device+u'''"
         logging.info('####################测试集 {sn} : 测试用例 {tn} 开始####################'.format(tn=self.testcase_name,sn=self.scenario_name))
         self.testcase_result={}
         self.global_parameters={}
