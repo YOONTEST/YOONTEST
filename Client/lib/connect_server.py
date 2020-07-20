@@ -11,5 +11,5 @@ import Client.lib.load_data as load_data
 
 host_name = sys.argv[1]
 status = sys.argv[2]
-slave_class = load_data.set_slave(host_name,status)
-slave = slave_class()
+subordinate_class = load_data.set_subordinate(host_name,status)
+subordinate = subordinate_class()

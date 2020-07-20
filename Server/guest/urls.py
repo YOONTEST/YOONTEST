@@ -97,7 +97,7 @@ urlpatterns = [
     url(r'^get-activity/', test_data.get_activity),
     url(r'^get-device/', test_data.get_device),
     url(r'^set-activity/', test_data.set_activity),
-    url(r'^slave/', test_data.slave),
+    url(r'^subordinate/', test_data.subordinate),
     url(r'^upload-run-data/', test_data.upload_run_time),
     url(r'^get_run_data/', test_data.get_run_time),
     url(r'^upload-result/', test_data.upload_results),

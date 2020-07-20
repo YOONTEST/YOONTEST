@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('plan_name', models.CharField(max_length=100)),
                 ('test_type', models.CharField(max_length=100)),
-                ('slave_name', models.CharField(max_length=100)),
+                ('subordinate_name', models.CharField(max_length=100)),
                 ('status', models.CharField(max_length=100)),
                 ('create_time', models.DateTimeField(auto_now=True)),
             ],
@@ -118,17 +118,17 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='Slaves',
+            name='Subordinates',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slave_name', models.CharField(max_length=100)),
+                ('subordinate_name', models.CharField(max_length=100)),
             ],
         ),
         migrations.CreateModel(
-            name='Slaves_logs',
+            name='Subordinates_logs',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slave_name', models.CharField(max_length=100)),
+                ('subordinate_name', models.CharField(max_length=100)),
                 ('status', models.CharField(max_length=100)),
                 ('create_time', models.DateTimeField(auto_now=True)),
             ],

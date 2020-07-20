@@ -14,38 +14,38 @@ from sign.models import Repository
 from sign.models import Test_plan
 from sign.models import Plan_case
 from sign.models import Activity
-from sign.models import Slaves
-from sign.models import Slaves_logs
+from sign.models import Subordinates
+from sign.models import Subordinates_logs
 from sign.models import Execution
 from sign.models import Run_time_data
 from api_v1 import custom_data
 #from django.core import serializers
 
-def slave(request): #启动/关闭分支接口
-    slave_name = request.GET.get('slave','')  #分支机器名
+def subordinate(request): #启动/关闭分支接口
+    subordinate_name = request.GET.get('subordinate','')  #分支机器名
     status = request.GET.get('status','')     #分支机器状态
     
-    print(slave_name)
-    one_slave = Slaves.objects.filter(slave_name=slave_name)
+    print(subordinate_name)
+    one_subordinate = Subordinates.objects.filter(subordinate_name=subordinate_name)
     now_time = datetime
     if status=="up":
-        if len(one_slave):
+        if len(one_subordinate):
             pass
         else:
-            Slaves.objects.create(slave_name =slave_name)
-            Slaves_logs.objects.create(slave_name = slave_name,status="up",create_time=str(now_time))
+            Subordinates.objects.create(subordinate_name =subordinate_name)
+            Subordinates_logs.objects.create(subordinate_name = subordinate_name,status="up",create_time=str(now_time))
     elif status =="down":
-        if len(one_slave):
-            one_slave.delete()
-            Slaves_logs.objects.create(slave_name = slave_name,status="down",create_time=str(now_time))
+        if len(one_subordinate):
+            one_subordinate.delete()
+            Subordinates_logs.objects.create(subordinate_name = subordinate_name,status="down",create_time=str(now_time))
     else:
         pass
     return JsonResponse({'data':"success"})
     
 
 def get_activity(request):#获取执行活动接口
-    slave_name = request.GET.get('slave','')  #分支机器名
-    one_activity = Activity.objects.filter(slave_name=slave_name)
+    subordinate_name = request.GET.get('subordinate','')  #分支机器名
+    one_activity = Activity.objects.filter(subordinate_name=subordinate_name)
     plan_name = activity_id = test_type = device = ""
     for one in one_activity:
         print(one.status)

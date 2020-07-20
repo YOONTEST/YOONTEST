@@ -128,33 +128,33 @@ class Key_repository(models.Model):
     def __str__(self):
         return self.key_name,self.key_value
 
-class Slaves_logs(models.Model):
+class Subordinates_logs(models.Model):
     id = models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
-    slave_name= models.CharField(max_length=100)                # 机器名
+    subordinate_name= models.CharField(max_length=100)                # 机器名
     status = models.CharField(max_length=100)                   # 机器状态
     create_time = models.DateTimeField(auto_now=True)           # 创建时间（自动获取当前时间）
 
     def __str__(self):
-        return self.slave_name
+        return self.subordinate_name
 
-class Slaves(models.Model):
+class Subordinates(models.Model):
     id = models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
-    slave_name= models.CharField(max_length=100)                # 机器名
+    subordinate_name= models.CharField(max_length=100)                # 机器名
 
     def __str__(self):
-        return self.slave_name
+        return self.subordinate_name
 
 class Activity(models.Model):
     id = models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
     plan_name= models.CharField(max_length=100)                 # 计划名
     test_type= models.CharField(max_length=100)                 # 测试类型
-    slave_name= models.CharField(max_length=100)                # 机器名
+    subordinate_name= models.CharField(max_length=100)                # 机器名
     device_name= models.CharField(max_length=100)               # 设备名
     status = models.CharField(max_length=100)                   # 活动状态
     create_time = models.DateTimeField(auto_now=True)           # 创建时间（自动获取当前时间）
 
     def __str__(self):
-        return self.slave_name,self.status
+        return self.subordinate_name,self.status
 
 
 class Run_time_data(models.Model):
@@ -183,4 +183,4 @@ class Report_summary(models.Model):
     casetype= models.CharField(max_length=255)                  # 用例集名
     caseid= models.CharField(max_length=255)                    # 用例集名
     def __str__(self):
-        return self.slave_name
+        return self.subordinate_name
