@@ -12,11 +12,11 @@ rootPath = os.path.split(curPath)[0]
 sys.path.append(rootPath)
 
 class test_cases(object):
-    def __init__(self,slave):
-        self.slave=slave
+    def __init__(self,subordinate):
+        self.subordinate=subordinate
     
     def __call__(self):
-        activity_class = get_activity(self.slave)
+        activity_class = get_activity(self.subordinate)
         activity=activity_class()
         plan_name = activity.get("plan_name")
         activity_id = activity.get("activity_id")
@@ -50,10 +50,10 @@ class test_case():
         return self.result["data"] 
     
 class get_activity():
-    def __init__(self,slave):
-        self.slave=slave
+    def __init__(self,subordinate):
+        self.subordinate=subordinate
     def __call__(self):
-        url="http://10.10.11.16/get-activity/?slave="+self.slave
+        url="http://10.10.11.16/get-activity/?slave="+self.subordinate
         self.request=requests.get(url)
         self.result = self.request.json()
         return self.result.get("data")
@@ -77,12 +77,12 @@ class set_activity():
         self.result = self.request.json()
         return self.result.get("data")
 
-class set_slave():
-    def __init__(self,slave,status):
-        self.slave = slave
+class set_subordinate():
+    def __init__(self,subordinate,status):
+        self.subordinate = subordinate
         self.status = status
     def __call__(self):
-        url="http://10.10.11.16/slave/?slave="+self.slave+"&status="+self.status
+        url="http://10.10.11.16/slave/?slave="+self.subordinate+"&status="+self.status
         self.request=requests.get(url)
         self.result = self.request.json()
         return self.result.get("data")

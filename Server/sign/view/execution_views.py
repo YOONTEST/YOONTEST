@@ -1,7 +1,7 @@
 #coding=utf-8
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
-from sign.models import Test_plan,Slaves_logs,Activity,Slaves,Execution,Device
+from sign.models import Test_plan,Subordinates_logs,Activity,Subordinates,Execution,Device
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -20,12 +20,12 @@ logger = logging.getLogger(__name__)
 @login_required
 def execution(request):
     plan_list = Test_plan.objects.all().order_by('plan_name')
-    slaves = Slaves.objects.all()
+    subordinates = Subordinates.objects.all()
     devices = Device.objects.all()
-    if len(slaves)==0:
-        slave_msg="没有可用主机..."
+    if len(subordinates)==0:
+        subordinate_msg="没有可用主机..."
     else:
-        slave_msg="请选择一台主机..."
+        subordinate_msg="请选择一台主机..."
     
     if len(devices)==0:
         device_msg="没有可用设备..."
@@ -44,18 +44,18 @@ def execution(request):
     except EmptyPage:
         # 如果页数超出查询范围，取最后一页
         activities = paginator.page(paginator.num_pages)
-    return render(request, "execution.html", {"user": username, "slaves": slaves,"devices":devices,"plan_list":plan_list,"activities": activities,"slave_msg":slave_msg,"device_msg":device_msg})
+    return render(request, "execution.html", {"user": username, "subordinates": subordinates,"devices":devices,"plan_list":plan_list,"activities": activities,"subordinate_msg":subordinate_msg,"device_msg":device_msg})
 
 @login_required
 def rerun_scripts(request,activity_id):
     username = request.session.get('username', '')
     current_activity = Activity.objects.filter(id=activity_id)
     all_activity = Activity.objects.all()
-    slave_name=""
+    subordinate_name=""
     for activity in all_activity:
-        slave_name=activity.slave_name
-    pending_activity = Activity.objects.filter(slave_name=slave_name,status='pending')
-    running_activity = Activity.objects.filter(slave_name=slave_name,status='running')
+        subordinate_name=activity.subordinate_name
+    pending_activity = Activity.objects.filter(subordinate_name=subordinate_name,status='pending')
+    running_activity = Activity.objects.filter(subordinate_name=subordinate_name,status='running')
 
     if len(pending_activity):
         return HttpResponseRedirect('/execution/')
@@ -77,25 +77,25 @@ def run_scripts(request):
     username = request.session.get('username', '')
 
     planname = request.GET.get("planname", "")
-    slavename = request.GET.get("slavename", "")
+    subordinatename = request.GET.get("subordinatename", "")
     devicename = request.GET.get("devicename", "")
     plan_list = Test_plan.objects.filter(plan_name=planname)
     test_type=""
     for plan in plan_list:
         test_type=plan.test_type
 
-    pending_activity = Activity.objects.filter(slave_name=slavename,status='pending')
-    running_activity = Activity.objects.filter(slave_name=slavename,status='running')
+    pending_activity = Activity.objects.filter(subordinate_name=subordinatename,status='pending')
+    running_activity = Activity.objects.filter(subordinate_name=subordinatename,status='running')
 
     if len(pending_activity):
         return HttpResponseRedirect('/execution/')
     if len(running_activity):
         return HttpResponseRedirect('/execution/')
 
-    if slavename=="" or planname=="" or test_type=="":
+    if subordinatename=="" or planname=="" or test_type=="":
         return HttpResponseRedirect('/execution/')
     else:
-        Activity.objects.create(plan_name=planname,slave_name=slavename,device_name=devicename,test_type=test_type,status='pending')
+        Activity.objects.create(plan_name=planname,subordinate_name=subordinatename,device_name=devicename,test_type=test_type,status='pending')
 
     activities = Activity.objects.all()
     return HttpResponseRedirect('/execution/')

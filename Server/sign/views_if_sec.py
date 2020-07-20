@@ -105,7 +105,7 @@ def user_sign(request):
 
     # 签名检查
     md5 = hashlib.md5()
-    sign_str = client_time + "&Guest-Bugmaster"
+    sign_str = client_time + "&Guest-Bugmain"
     sign_bytes_utf8 = sign_str.encode(encoding="utf-8")
     md5.update(sign_bytes_utf8)
     sever_sign = md5.hexdigest()
